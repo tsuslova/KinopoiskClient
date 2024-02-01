@@ -16,6 +16,12 @@
 		994279EB2B6B408A008A8A91 /* KinopoiskClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279EA2B6B408A008A8A91 /* KinopoiskClientTests.swift */; };
 		994279F52B6B408A008A8A91 /* KinopoiskClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279F42B6B408A008A8A91 /* KinopoiskClientUITests.swift */; };
 		994279F72B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279F62B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift */; };
+		99427A0A2B6B4458008A8A91 /* FilmResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A092B6B4458008A8A91 /* FilmResponse.swift */; };
+		99427A0C2B6B446B008A8A91 /* FilmsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A0B2B6B446B008A8A91 /* FilmsMapper.swift */; };
+		99427A0F2B6B4491008A8A91 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A0E2B6B4491008A8A91 /* ServiceError.swift */; };
+		99427A142B6B4565008A8A91 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A122B6B4565008A8A91 /* URLSessionHTTPClient.swift */; };
+		99427A152B6B4565008A8A91 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A132B6B4565008A8A91 /* HTTPClient.swift */; };
+		99427A182B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A172B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +55,12 @@
 		994279F02B6B408A008A8A91 /* KinopoiskClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinopoiskClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		994279F42B6B408A008A8A91 /* KinopoiskClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinopoiskClientUITests.swift; sourceTree = "<group>"; };
 		994279F62B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinopoiskClientUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		99427A092B6B4458008A8A91 /* FilmResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmResponse.swift; sourceTree = "<group>"; };
+		99427A0B2B6B446B008A8A91 /* FilmsMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsMapper.swift; sourceTree = "<group>"; };
+		99427A0E2B6B4491008A8A91 /* ServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		99427A122B6B4565008A8A91 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		99427A132B6B4565008A8A91 /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		99427A172B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+StatusCode.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +111,8 @@
 		994279D22B6B4086008A8A91 /* KinopoiskClient */ = {
 			isa = PBXGroup;
 			children = (
+				99427A072B6B441B008A8A91 /* Model */,
+				99427A062B6B4411008A8A91 /* DataService */,
 				99427A052B6B4189008A8A91 /* FilmsList */,
 				99427A032B6B415D008A8A91 /* UI */,
 				99427A042B6B416F008A8A91 /* General */,
@@ -149,6 +163,58 @@
 				994279D72B6B4086008A8A91 /* FilmsListViewController.swift */,
 			);
 			path = FilmsList;
+			sourceTree = "<group>";
+		};
+		99427A062B6B4411008A8A91 /* DataService */ = {
+			isa = PBXGroup;
+			children = (
+				99427A112B6B4565008A8A91 /* HTTP */,
+				99427A082B6B442C008A8A91 /* ResponseModel */,
+				99427A0D2B6B4491008A8A91 /* ErrorsHandling */,
+			);
+			path = DataService;
+			sourceTree = "<group>";
+		};
+		99427A072B6B441B008A8A91 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		99427A082B6B442C008A8A91 /* ResponseModel */ = {
+			isa = PBXGroup;
+			children = (
+				99427A162B6B459E008A8A91 /* Helpers */,
+				99427A092B6B4458008A8A91 /* FilmResponse.swift */,
+				99427A0B2B6B446B008A8A91 /* FilmsMapper.swift */,
+			);
+			path = ResponseModel;
+			sourceTree = "<group>";
+		};
+		99427A0D2B6B4491008A8A91 /* ErrorsHandling */ = {
+			isa = PBXGroup;
+			children = (
+				99427A0E2B6B4491008A8A91 /* ServiceError.swift */,
+			);
+			path = ErrorsHandling;
+			sourceTree = "<group>";
+		};
+		99427A112B6B4565008A8A91 /* HTTP */ = {
+			isa = PBXGroup;
+			children = (
+				99427A122B6B4565008A8A91 /* URLSessionHTTPClient.swift */,
+				99427A132B6B4565008A8A91 /* HTTPClient.swift */,
+			);
+			path = HTTP;
+			sourceTree = "<group>";
+		};
+		99427A162B6B459E008A8A91 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				99427A172B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -282,8 +348,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99427A142B6B4565008A8A91 /* URLSessionHTTPClient.swift in Sources */,
+				99427A0F2B6B4491008A8A91 /* ServiceError.swift in Sources */,
+				99427A152B6B4565008A8A91 /* HTTPClient.swift in Sources */,
+				99427A0A2B6B4458008A8A91 /* FilmResponse.swift in Sources */,
+				99427A0C2B6B446B008A8A91 /* FilmsMapper.swift in Sources */,
 				994279D82B6B4086008A8A91 /* FilmsListViewController.swift in Sources */,
 				994279D42B6B4086008A8A91 /* AppDelegate.swift in Sources */,
+				99427A182B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift in Sources */,
 				994279D62B6B4086008A8A91 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
