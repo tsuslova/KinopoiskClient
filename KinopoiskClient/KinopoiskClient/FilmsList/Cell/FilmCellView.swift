@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class FilmCellView: UITableViewCell {
     static let identifier = "FilmCellView"
@@ -13,6 +14,8 @@ final class FilmCellView: UITableViewCell {
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var descriptionLabel: UILabel!
     @IBOutlet private var posterImageView: UIImageView!
+    
+    private var bindings = Set<AnyCancellable>()
     
     var viewModel: FilmCellViewModel? {
         didSet {
@@ -24,6 +27,14 @@ final class FilmCellView: UITableViewCell {
     func viewModelChanged(_ viewModel: FilmCellViewModel) {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
+        viewModel.$posterImageData
+            .receive(on: RunLoop.main)
+            .compactMap { $0 }
+            .map { UIImage(data: $0) }
+            .sink { [weak posterImageView] image in
+                posterImageView?.image = image
+            }
+            .store(in: &bindings)
     }
 
 }

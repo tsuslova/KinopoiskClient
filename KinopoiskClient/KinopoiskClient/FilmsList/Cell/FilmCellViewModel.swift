@@ -6,14 +6,21 @@
 //
 
 import Foundation
+import Combine
 
 final class FilmCellViewModel {
     @Published var title: String = ""
     @Published var description: String = ""
-    //TODO: go away from UIKit in Model, replace with data & use it in interface
-    //@Published var posterImage: UIImage = ""
         
+    @Published var posterImageData: Data?
+    @Published var isImageLoading: Bool = false
+    
     private let film: Film
+    
+    private var dataLoadingBindings = Set<AnyCancellable>()
+    
+    //TODO: this dependency should be injected from outside...
+    var imageLoadingService: ImageLoader = RemoteImageLoader(client: URLSessionHTTPClient())
     
     init(film: Film) {
         self.film = film
@@ -21,15 +28,31 @@ final class FilmCellViewModel {
         setUpBindings()
     }
     
+    func cancelLoading() {
+        dataLoadingBindings.removeAll()
+    }
+    
+    //MARK: Intrinsic logic
     private func setUpBindings() {
         title = film.nameRu ?? "Unnamed movie"
         fillDescription()
-        //TODO: image
+        
+        guard let url = URL(string: film.posterUrlPreview) else {
+            print("Error: wrong posterUrlPreview (\(film.posterUrlPreview))")
+            return
+        }
+        imageLoadingService.get(from: url)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.isImageLoading = false
+            } receiveValue: { [weak self] data in
+                self?.posterImageData = data
+            }.store(in: &dataLoadingBindings)
     }
     
     private func fillDescription() {
-        let countries = film.countries.shortenTo3
-        let genres = film.genres.shortenTo3
+        let countries = film.countries.shortenTo3Words
+        let genres = film.genres.shortenTo3Words
         
         if !countries.isEmpty && !genres.isEmpty {
             description = "\(countries), \(genres), \(film.year)"
@@ -44,9 +67,9 @@ final class FilmCellViewModel {
 }
 
 private extension Array where Element == String {
-    var shortenTo3: String {
+    var shortenTo3Words: String {
         self.count > 3 ?
-        "\(self[0..<3].joined(separator: ", "))[...]" :
-        "\(self.joined(separator: ", "))"
+            "\(self[0..<3].joined(separator: ", "))[...]" :
+            "\(self.joined(separator: ", "))"
     }
 }

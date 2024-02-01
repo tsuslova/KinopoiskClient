@@ -35,6 +35,7 @@
 		99427A382B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A352B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift */; };
 		99427A3B2B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A392B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift */; };
 		99427A3F2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A3E2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift */; };
+		99427A442B6B82AE008A8A91 /* RemoteImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A432B6B82AE008A8A91 /* RemoteImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		99427A392B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsServiceEndToEndTests.swift; sourceTree = "<group>"; };
 		99427A3E2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		99427A422B6B6642008A8A91 /* KinopoiskClient.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = KinopoiskClient.xctestplan; sourceTree = "<group>"; };
+		99427A432B6B82AE008A8A91 /* RemoteImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +254,7 @@
 				99427A312B6B50DB008A8A91 /* Requests */,
 				99427A262B6B4CE0008A8A91 /* Base */,
 				99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */,
+				99427A432B6B82AE008A8A91 /* RemoteImageLoader.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -416,6 +419,7 @@
 				99427A0F2B6B4491008A8A91 /* ServiceError.swift in Sources */,
 				99427A372B6B50DB008A8A91 /* FilmsRequest.swift in Sources */,
 				99427A362B6B50DB008A8A91 /* SearchFilmsRequest.swift in Sources */,
+				99427A442B6B82AE008A8A91 /* RemoteImageLoader.swift in Sources */,
 				99427A252B6B4CAF008A8A91 /* RemoteFilmsService.swift in Sources */,
 				99427A152B6B4565008A8A91 /* HTTPClient.swift in Sources */,
 				99427A282B6B4CE0008A8A91 /* FilmsService.swift in Sources */,
