@@ -14,8 +14,6 @@
 		994279DD2B6B408A008A8A91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994279DC2B6B408A008A8A91 /* Assets.xcassets */; };
 		994279E02B6B408A008A8A91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 994279DE2B6B408A008A8A91 /* LaunchScreen.storyboard */; };
 		994279EB2B6B408A008A8A91 /* KinopoiskClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279EA2B6B408A008A8A91 /* KinopoiskClientTests.swift */; };
-		994279F52B6B408A008A8A91 /* KinopoiskClientUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279F42B6B408A008A8A91 /* KinopoiskClientUITests.swift */; };
-		994279F72B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279F62B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift */; };
 		99427A0A2B6B4458008A8A91 /* FilmResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A092B6B4458008A8A91 /* FilmResponse.swift */; };
 		99427A0C2B6B446B008A8A91 /* FilmsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A0B2B6B446B008A8A91 /* FilmsMapper.swift */; };
 		99427A0F2B6B4491008A8A91 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A0E2B6B4491008A8A91 /* ServiceError.swift */; };
@@ -36,13 +34,6 @@
 			remoteGlobalIDString = 994279CF2B6B4086008A8A91;
 			remoteInfo = KinopoiskClient;
 		};
-		994279F12B6B408A008A8A91 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 994279C82B6B4086008A8A91 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 994279CF2B6B4086008A8A91;
-			remoteInfo = KinopoiskClient;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -56,9 +47,6 @@
 		994279E12B6B408A008A8A91 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		994279E62B6B408A008A8A91 /* KinopoiskClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinopoiskClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		994279EA2B6B408A008A8A91 /* KinopoiskClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinopoiskClientTests.swift; sourceTree = "<group>"; };
-		994279F02B6B408A008A8A91 /* KinopoiskClientUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KinopoiskClientUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		994279F42B6B408A008A8A91 /* KinopoiskClientUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinopoiskClientUITests.swift; sourceTree = "<group>"; };
-		994279F62B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KinopoiskClientUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		99427A092B6B4458008A8A91 /* FilmResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmResponse.swift; sourceTree = "<group>"; };
 		99427A0B2B6B446B008A8A91 /* FilmsMapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsMapper.swift; sourceTree = "<group>"; };
 		99427A0E2B6B4491008A8A91 /* ServiceError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
@@ -86,13 +74,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		994279ED2B6B408A008A8A91 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -101,7 +82,6 @@
 			children = (
 				994279D22B6B4086008A8A91 /* KinopoiskClient */,
 				994279E92B6B408A008A8A91 /* KinopoiskClientTests */,
-				994279F32B6B408A008A8A91 /* KinopoiskClientUITests */,
 				994279D12B6B4086008A8A91 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -111,7 +91,6 @@
 			children = (
 				994279D02B6B4086008A8A91 /* KinopoiskClient.app */,
 				994279E62B6B408A008A8A91 /* KinopoiskClientTests.xctest */,
-				994279F02B6B408A008A8A91 /* KinopoiskClientUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -134,15 +113,6 @@
 				994279EA2B6B408A008A8A91 /* KinopoiskClientTests.swift */,
 			);
 			path = KinopoiskClientTests;
-			sourceTree = "<group>";
-		};
-		994279F32B6B408A008A8A91 /* KinopoiskClientUITests */ = {
-			isa = PBXGroup;
-			children = (
-				994279F42B6B408A008A8A91 /* KinopoiskClientUITests.swift */,
-				994279F62B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift */,
-			);
-			path = KinopoiskClientUITests;
 			sourceTree = "<group>";
 		};
 		99427A032B6B415D008A8A91 /* UI */ = {
@@ -275,24 +245,6 @@
 			productReference = 994279E62B6B408A008A8A91 /* KinopoiskClientTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		994279EF2B6B408A008A8A91 /* KinopoiskClientUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 99427A002B6B408A008A8A91 /* Build configuration list for PBXNativeTarget "KinopoiskClientUITests" */;
-			buildPhases = (
-				994279EC2B6B408A008A8A91 /* Sources */,
-				994279ED2B6B408A008A8A91 /* Frameworks */,
-				994279EE2B6B408A008A8A91 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				994279F22B6B408A008A8A91 /* PBXTargetDependency */,
-			);
-			name = KinopoiskClientUITests;
-			productName = KinopoiskClientUITests;
-			productReference = 994279F02B6B408A008A8A91 /* KinopoiskClientUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -307,10 +259,6 @@
 						CreatedOnToolsVersion = 15.2;
 					};
 					994279E52B6B408A008A8A91 = {
-						CreatedOnToolsVersion = 15.2;
-						TestTargetID = 994279CF2B6B4086008A8A91;
-					};
-					994279EF2B6B408A008A8A91 = {
 						CreatedOnToolsVersion = 15.2;
 						TestTargetID = 994279CF2B6B4086008A8A91;
 					};
@@ -331,7 +279,6 @@
 			targets = (
 				994279CF2B6B4086008A8A91 /* KinopoiskClient */,
 				994279E52B6B408A008A8A91 /* KinopoiskClientTests */,
-				994279EF2B6B408A008A8A91 /* KinopoiskClientUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -348,13 +295,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		994279E42B6B408A008A8A91 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		994279EE2B6B408A008A8A91 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -392,15 +332,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		994279EC2B6B408A008A8A91 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				994279F52B6B408A008A8A91 /* KinopoiskClientUITests.swift in Sources */,
-				994279F72B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -408,11 +339,6 @@
 			isa = PBXTargetDependency;
 			target = 994279CF2B6B4086008A8A91 /* KinopoiskClient */;
 			targetProxy = 994279E72B6B408A008A8A91 /* PBXContainerItemProxy */;
-		};
-		994279F22B6B408A008A8A91 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 994279CF2B6B4086008A8A91 /* KinopoiskClient */;
-			targetProxy = 994279F12B6B408A008A8A91 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -655,42 +581,6 @@
 			};
 			name = Release;
 		};
-		99427A012B6B408A008A8A91 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WJ4DT67S8G;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.toto.KinopoiskClientUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = KinopoiskClient;
-			};
-			name = Debug;
-		};
-		99427A022B6B408A008A8A91 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = WJ4DT67S8G;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.toto.KinopoiskClientUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = KinopoiskClient;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -717,15 +607,6 @@
 			buildConfigurations = (
 				994279FE2B6B408A008A8A91 /* Debug */,
 				994279FF2B6B408A008A8A91 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		99427A002B6B408A008A8A91 /* Build configuration list for PBXNativeTarget "KinopoiskClientUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				99427A012B6B408A008A8A91 /* Debug */,
-				99427A022B6B408A008A8A91 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
