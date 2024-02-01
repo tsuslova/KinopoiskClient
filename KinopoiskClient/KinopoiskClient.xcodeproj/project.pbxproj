@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		994279D42B6B4086008A8A91 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279D32B6B4086008A8A91 /* AppDelegate.swift */; };
 		994279D62B6B4086008A8A91 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279D52B6B4086008A8A91 /* SceneDelegate.swift */; };
-		994279D82B6B4086008A8A91 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279D72B6B4086008A8A91 /* ViewController.swift */; };
+		994279D82B6B4086008A8A91 /* FilmsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994279D72B6B4086008A8A91 /* FilmsListViewController.swift */; };
 		994279DB2B6B4086008A8A91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 994279D92B6B4086008A8A91 /* Main.storyboard */; };
 		994279DD2B6B408A008A8A91 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 994279DC2B6B408A008A8A91 /* Assets.xcassets */; };
 		994279E02B6B408A008A8A91 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 994279DE2B6B408A008A8A91 /* LaunchScreen.storyboard */; };
@@ -39,7 +39,7 @@
 		994279D02B6B4086008A8A91 /* KinopoiskClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KinopoiskClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		994279D32B6B4086008A8A91 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		994279D52B6B4086008A8A91 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		994279D72B6B4086008A8A91 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		994279D72B6B4086008A8A91 /* FilmsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsListViewController.swift; sourceTree = "<group>"; };
 		994279DA2B6B4086008A8A91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		994279DC2B6B408A008A8A91 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		994279DF2B6B408A008A8A91 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -99,13 +99,9 @@
 		994279D22B6B4086008A8A91 /* KinopoiskClient */ = {
 			isa = PBXGroup;
 			children = (
-				994279D32B6B4086008A8A91 /* AppDelegate.swift */,
-				994279D52B6B4086008A8A91 /* SceneDelegate.swift */,
-				994279D72B6B4086008A8A91 /* ViewController.swift */,
-				994279D92B6B4086008A8A91 /* Main.storyboard */,
-				994279DC2B6B408A008A8A91 /* Assets.xcassets */,
-				994279DE2B6B408A008A8A91 /* LaunchScreen.storyboard */,
-				994279E12B6B408A008A8A91 /* Info.plist */,
+				99427A052B6B4189008A8A91 /* FilmsList */,
+				99427A032B6B415D008A8A91 /* UI */,
+				99427A042B6B416F008A8A91 /* General */,
 			);
 			path = KinopoiskClient;
 			sourceTree = "<group>";
@@ -125,6 +121,34 @@
 				994279F62B6B408A008A8A91 /* KinopoiskClientUITestsLaunchTests.swift */,
 			);
 			path = KinopoiskClientUITests;
+			sourceTree = "<group>";
+		};
+		99427A032B6B415D008A8A91 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				994279D92B6B4086008A8A91 /* Main.storyboard */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		99427A042B6B416F008A8A91 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				994279D32B6B4086008A8A91 /* AppDelegate.swift */,
+				994279D52B6B4086008A8A91 /* SceneDelegate.swift */,
+				994279DC2B6B408A008A8A91 /* Assets.xcassets */,
+				994279DE2B6B408A008A8A91 /* LaunchScreen.storyboard */,
+				994279E12B6B408A008A8A91 /* Info.plist */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		99427A052B6B4189008A8A91 /* FilmsList */ = {
+			isa = PBXGroup;
+			children = (
+				994279D72B6B4086008A8A91 /* FilmsListViewController.swift */,
+			);
+			path = FilmsList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,7 +282,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				994279D82B6B4086008A8A91 /* ViewController.swift in Sources */,
+				994279D82B6B4086008A8A91 /* FilmsListViewController.swift in Sources */,
 				994279D42B6B4086008A8A91 /* AppDelegate.swift in Sources */,
 				994279D62B6B4086008A8A91 /* SceneDelegate.swift in Sources */,
 			);
@@ -368,7 +392,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				INFOPLIST_FILE = KinopoiskClient/General/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -425,7 +450,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				INFOPLIST_FILE = KinopoiskClient/General/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -444,12 +470,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WJ4DT67S8G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KinopoiskClient/Info.plist;
+				INFOPLIST_FILE = KinopoiskClient/General/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -472,12 +499,13 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = WJ4DT67S8G;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KinopoiskClient/Info.plist;
+				INFOPLIST_FILE = KinopoiskClient/General/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
