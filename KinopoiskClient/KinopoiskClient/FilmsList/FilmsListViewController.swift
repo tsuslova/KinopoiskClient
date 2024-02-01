@@ -7,13 +7,10 @@
 
 import UIKit
 
-class FilmsListViewController: UIViewController {
-
+final class FilmsListViewController: UIViewController {
+    private var listViewModel = FilmsListViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
-
-
 }
-
