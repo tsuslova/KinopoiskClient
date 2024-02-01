@@ -15,19 +15,25 @@ enum ListViewModelState {
 }
 
 final class FilmsListViewModel {
-    @Published private(set) var films: [Film] = FilmsListViewModel.dummyFilmsList()
-    @Published private(set) var state: ListViewModelState = .loadingFinished
+    @Published private(set) var state: ListViewModelState = .loading
+    
+    enum Section {
+        case films
+    }
+    @Published private(set) var films: [Film] = []
     
     private var filmsService: FilmsService
     private var bindings = Set<AnyCancellable>()
     
-    private var lastPageLoaded = KinopoiskDefaults.firstPage
+    private var currentPage = KinopoiskDefaults.firstPage
     
     init(filmsService: FilmsService) {
         self.filmsService = filmsService
     }
     
     func loadFilms() {
+        state = .loading
+        
         let loadingCompletionHandler: (Subscribers.Completion<ServiceError>) -> Void = { [weak self] completion in
             switch completion {
             case .failure:
@@ -41,7 +47,8 @@ final class FilmsListViewModel {
             self?.films = films
         }
         
-        self.filmsService.get(page: lastPageLoaded)
+        self.filmsService
+            .get(page: currentPage)
             .sink(receiveCompletion: loadingCompletionHandler, receiveValue: pageLoadedHandler)
             .store(in: &bindings)
     }

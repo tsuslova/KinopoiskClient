@@ -22,7 +22,8 @@ final class FilmCellView: UITableViewCell {
     }
     
     func viewModelChanged(_ viewModel: FilmCellViewModel) {
-        //TODO fill the interface with data from viewModel
+        titleLabel.text = viewModel.title
+        descriptionLabel.text = viewModel.description
     }
 
 }

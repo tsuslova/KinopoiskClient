@@ -8,6 +8,9 @@ import UIKit
 import Combine
 
 final class FilmsListViewController: UITableViewController {
+    private typealias DataSource = UITableViewDiffableDataSource<FilmsListViewModel.Section, Film>
+    private typealias Snapshot = NSDiffableDataSourceSnapshot<FilmsListViewModel.Section, Film>
+    private lazy var dataSource = makeDataSource()
     
     //TODO: move model, service & client initialization away from VC
     private var listViewModel = FilmsListViewModel(filmsService: RemoteFilmsService(client: URLSessionHTTPClient()))
@@ -16,13 +19,14 @@ final class FilmsListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModelToView()
+        refresh()
     }
-    
+
     func bindViewModelToView() {
         listViewModel.$films
             .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] films in
-                self?.tableView.reloadData()
+                self?.updateSections()
             })
             .store(in: &bindings)
         
@@ -37,12 +41,12 @@ final class FilmsListViewController: UITableViewController {
                 self?.finishLoading()
             }
         }
-        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        
         listViewModel.$state
             .receive(on: RunLoop.main)
             .sink(receiveValue: stateValueHandler)
             .store(in: &bindings)
+        
+        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
     
     private func startLoading() {
@@ -51,11 +55,17 @@ final class FilmsListViewController: UITableViewController {
     
     private func finishLoading() {
         refreshControl?.endRefreshing()
-        tableView.reloadData()
     }
     
     @objc func refresh() {
         listViewModel.loadFilms()
+    }
+    
+    private func updateSections() {
+        var snapshot = Snapshot()
+        snapshot.appendSections([.films])
+        snapshot.appendItems(listViewModel.films)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
     
 }
@@ -68,19 +78,15 @@ extension FilmsListViewController {
 }
 
 //MARK: - TableView Datasource
-extension FilmsListViewController {
-    
-    public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //TODO: binding
-        return listViewModel.films.count
-    }
-    
-    public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //TODO: initialization with cell view model
-        let cell = tableView.dequeueReusableCell(
-            withIdentifier: FilmCellView.identifier,
-            for: indexPath) as! FilmCellView
-        cell.viewModel = FilmCellViewModel()
-        return cell
+private extension FilmsListViewController {
+    private func makeDataSource() -> DataSource {
+        return UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, film in
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: FilmCellView.identifier,
+                for: indexPath) as! FilmCellView
+            cell.viewModel = FilmCellViewModel(film: film)
+            return cell
+        })
+        
     }
 }
