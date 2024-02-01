@@ -8,19 +8,23 @@
 import Foundation
 import Combine
 
-protocol ImageLoader {
-    func get(from url: URL) -> AnyPublisher<Data, URLError>
+protocol ImageLoader: AnyObject {
+    func get(from url: URL) -> AnyPublisher<Data?, URLError>
 }
 
 final class RemoteImageLoader: ImageLoader {
     private let client: HTTPClient
     
-    init(client: HTTPClient){
+    init(client: HTTPClient = URLSessionHTTPClient()){
         self.client = client
     }
     
-    func get(from url: URL) -> AnyPublisher<Data, URLError> {
-        client.dataTaskPublisher(for: url, parameters: [:])
+    func get(from url: URL) -> AnyPublisher<Data?, URLError> {
+        guard let publisher = client.dataTaskPublisher(for: url, parameters: [:]) else {
+            return Fail(error: URLError(.badURL))
+                .eraseToAnyPublisher()
+        }
+        return publisher
             .map { $0.data }
             .eraseToAnyPublisher()
     }

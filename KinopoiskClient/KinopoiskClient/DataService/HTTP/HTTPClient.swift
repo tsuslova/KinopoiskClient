@@ -15,7 +15,7 @@ public protocol Task {
 }
 
 public protocol HTTPClient {
-    func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher
+    func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher?
 }
 
 extension URLSessionDataTask: Task {}

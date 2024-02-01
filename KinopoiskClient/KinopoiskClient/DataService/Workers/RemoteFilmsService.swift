@@ -8,40 +8,47 @@
 import Foundation
 import Combine
 
-//TODO: normal router
-enum NetworkRouter {
-    static var filmsPath: String { "films" }
-    
-    static func baseUrl() -> URL {
-        URL(string: "https://kinopoiskapiunofficial.tech/api/v2.2")!
-    }
-
-    static func api(_ name: String) -> URL {
-        baseUrl().appendingPathComponent(name)
-    }
- 
-    static func filmsAPI() -> URL {
-        return api(filmsPath)
-    }
-}
-
 final class RemoteFilmsService: FilmsService {
     private let client: HTTPClient
     
-    public init(client: HTTPClient){
+    public init(client: HTTPClient = URLSessionHTTPClient()){
         self.client = client
     }
     
     func get(page: Int) -> AnyPublisher<[Film], ServiceError> {
+        let url = FilmsAPIEndpoint.root.url
+        let parameters = FilmsRequest(page: page)
+        
+        return filmsDataPublisher(url: url, parameters: parameters)
+    }
+    
+    func get(page: Int, keyword: String?) -> AnyPublisher<[Film], ServiceError> {
         guard page >= KinopoiskDefaults.firstPage else {
             print("You know that's Kinopoisk... Pagination starts from 1.")
             return Fail(error: ServiceError.badRequest)
                 .eraseToAnyPublisher()
         }
+        let url: URL
+        let parameters: CompactDictionaryRepresentable
         
-        let url = NetworkRouter.filmsAPI()
-        let parameters = FilmsRequest(page: page).compactDictionaryRepresentation
-        return client.dataTaskPublisher(for: url, parameters: parameters)
+        if let keyword = keyword{
+            url = FilmsAPIEndpoint.search.url
+            parameters = SearchFilmsRequest(page: page, keyword: keyword)
+        } else {
+            url = FilmsAPIEndpoint.root.url
+            parameters = FilmsRequest(page: page)
+        }
+        
+        return filmsDataPublisher(url: url, parameters: parameters)
+    }
+        
+    func filmsDataPublisher(url: URL, parameters: CompactDictionaryRepresentable) -> AnyPublisher<[Film], ServiceError> {
+        print("url \(url), parameters = \(parameters)")
+        guard let publisher = client.dataTaskPublisher(for: url, parameters: parameters.compactDictionaryRepresentation) else {
+            return Fail(error: ServiceError.badRequest)
+                .eraseToAnyPublisher()
+        }
+        return publisher
             .tryMap(FilmsResponseMapper.map)
             .map { $0.toModels() }
             .mapError(ServiceError.map)

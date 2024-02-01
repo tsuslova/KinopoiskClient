@@ -20,9 +20,10 @@ public class URLSessionHTTPClient: HTTPClient {
         setupSessionConfiguration()
     }
     
-    public func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher {
-        //TODO error handling
-        let request = getUrlRequest(with: url, parameters: parameters)!
+    public func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher? {
+        guard let request = getUrlRequest(with: url, parameters: parameters) else {
+            return nil
+        }
         return session.dataTaskPublisher(for: request)
     }
     
