@@ -24,6 +24,15 @@
 		99427A1D2B6B46DB008A8A91 /* FilmCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A1C2B6B46DB008A8A91 /* FilmCellViewModel.swift */; };
 		99427A1F2B6B4701008A8A91 /* FilmCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A1E2B6B4701008A8A91 /* FilmCellView.swift */; };
 		99427A212B6B4744008A8A91 /* FilmsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A202B6B4744008A8A91 /* FilmsListViewModel.swift */; };
+		99427A252B6B4CAF008A8A91 /* RemoteFilmsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */; };
+		99427A282B6B4CE0008A8A91 /* FilmsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A272B6B4CE0008A8A91 /* FilmsService.swift */; };
+		99427A2A2B6B4FFC008A8A91 /* KinopoiskDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A292B6B4FFC008A8A91 /* KinopoiskDefaults.swift */; };
+		99427A2C2B6B500A008A8A91 /* KinopoiskAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A2B2B6B500A008A8A91 /* KinopoiskAPI.swift */; };
+		99427A2F2B6B5026008A8A91 /* APIKeyReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A2D2B6B5026008A8A91 /* APIKeyReader.swift */; };
+		99427A302B6B5026008A8A91 /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99427A2E2B6B5026008A8A91 /* APIKey.plist */; };
+		99427A362B6B50DB008A8A91 /* SearchFilmsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */; };
+		99427A372B6B50DB008A8A91 /* FilmsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A332B6B50DB008A8A91 /* FilmsRequest.swift */; };
+		99427A382B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A352B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +66,15 @@
 		99427A1C2B6B46DB008A8A91 /* FilmCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCellViewModel.swift; sourceTree = "<group>"; };
 		99427A1E2B6B4701008A8A91 /* FilmCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmCellView.swift; sourceTree = "<group>"; };
 		99427A202B6B4744008A8A91 /* FilmsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmsListViewModel.swift; sourceTree = "<group>"; };
+		99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteFilmsService.swift; sourceTree = "<group>"; };
+		99427A272B6B4CE0008A8A91 /* FilmsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsService.swift; sourceTree = "<group>"; };
+		99427A292B6B4FFC008A8A91 /* KinopoiskDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KinopoiskDefaults.swift; sourceTree = "<group>"; };
+		99427A2B2B6B500A008A8A91 /* KinopoiskAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KinopoiskAPI.swift; sourceTree = "<group>"; };
+		99427A2D2B6B5026008A8A91 /* APIKeyReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeyReader.swift; sourceTree = "<group>"; };
+		99427A2E2B6B5026008A8A91 /* APIKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
+		99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilmsRequest.swift; sourceTree = "<group>"; };
+		99427A332B6B50DB008A8A91 /* FilmsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsRequest.swift; sourceTree = "<group>"; };
+		99427A352B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompactDictionaryRepresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +166,8 @@
 		99427A062B6B4411008A8A91 /* DataService */ = {
 			isa = PBXGroup;
 			children = (
+				99427A232B6B4C7C008A8A91 /* Workers */,
+				99427A222B6B4C3D008A8A91 /* APISettings */,
 				99427A112B6B4565008A8A91 /* HTTP */,
 				99427A082B6B442C008A8A91 /* ResponseModel */,
 				99427A0D2B6B4491008A8A91 /* ErrorsHandling */,
@@ -205,6 +225,53 @@
 				99427A1E2B6B4701008A8A91 /* FilmCellView.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		99427A222B6B4C3D008A8A91 /* APISettings */ = {
+			isa = PBXGroup;
+			children = (
+				99427A2E2B6B5026008A8A91 /* APIKey.plist */,
+				99427A2D2B6B5026008A8A91 /* APIKeyReader.swift */,
+				99427A2B2B6B500A008A8A91 /* KinopoiskAPI.swift */,
+				99427A292B6B4FFC008A8A91 /* KinopoiskDefaults.swift */,
+			);
+			path = APISettings;
+			sourceTree = "<group>";
+		};
+		99427A232B6B4C7C008A8A91 /* Workers */ = {
+			isa = PBXGroup;
+			children = (
+				99427A312B6B50DB008A8A91 /* Requests */,
+				99427A262B6B4CE0008A8A91 /* Base */,
+				99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */,
+			);
+			path = Workers;
+			sourceTree = "<group>";
+		};
+		99427A262B6B4CE0008A8A91 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				99427A272B6B4CE0008A8A91 /* FilmsService.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		99427A312B6B50DB008A8A91 /* Requests */ = {
+			isa = PBXGroup;
+			children = (
+				99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */,
+				99427A332B6B50DB008A8A91 /* FilmsRequest.swift */,
+				99427A342B6B50DB008A8A91 /* Helpers */,
+			);
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		99427A342B6B50DB008A8A91 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				99427A352B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +356,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				994279E02B6B408A008A8A91 /* LaunchScreen.storyboard in Resources */,
+				99427A302B6B5026008A8A91 /* APIKey.plist in Resources */,
 				994279DD2B6B408A008A8A91 /* Assets.xcassets in Resources */,
 				994279DB2B6B4086008A8A91 /* Main.storyboard in Resources */,
 			);
@@ -309,15 +377,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				99427A142B6B4565008A8A91 /* URLSessionHTTPClient.swift in Sources */,
+				99427A2A2B6B4FFC008A8A91 /* KinopoiskDefaults.swift in Sources */,
 				99427A1D2B6B46DB008A8A91 /* FilmCellViewModel.swift in Sources */,
+				99427A2F2B6B5026008A8A91 /* APIKeyReader.swift in Sources */,
+				99427A382B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift in Sources */,
 				99427A0F2B6B4491008A8A91 /* ServiceError.swift in Sources */,
+				99427A372B6B50DB008A8A91 /* FilmsRequest.swift in Sources */,
+				99427A362B6B50DB008A8A91 /* SearchFilmsRequest.swift in Sources */,
+				99427A252B6B4CAF008A8A91 /* RemoteFilmsService.swift in Sources */,
 				99427A152B6B4565008A8A91 /* HTTPClient.swift in Sources */,
+				99427A282B6B4CE0008A8A91 /* FilmsService.swift in Sources */,
 				99427A0A2B6B4458008A8A91 /* FilmResponse.swift in Sources */,
 				99427A0C2B6B446B008A8A91 /* FilmsMapper.swift in Sources */,
 				99427A1A2B6B464A008A8A91 /* Film.swift in Sources */,
 				994279D82B6B4086008A8A91 /* FilmsListViewController.swift in Sources */,
 				99427A1F2B6B4701008A8A91 /* FilmCellView.swift in Sources */,
 				994279D42B6B4086008A8A91 /* AppDelegate.swift in Sources */,
+				99427A2C2B6B500A008A8A91 /* KinopoiskAPI.swift in Sources */,
 				99427A182B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift in Sources */,
 				99427A212B6B4744008A8A91 /* FilmsListViewModel.swift in Sources */,
 				994279D62B6B4086008A8A91 /* SceneDelegate.swift in Sources */,
