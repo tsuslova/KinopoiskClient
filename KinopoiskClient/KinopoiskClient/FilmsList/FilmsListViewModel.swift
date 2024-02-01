@@ -53,10 +53,3 @@ final class FilmsListViewModel {
             .store(in: &bindings)
     }
 }
- 
-//Temporary test data
-extension FilmsListViewModel {
-    static func dummyFilmsList() -> [Film] {
-        [Film(kinopoiskId: 0, nameRu: "Анна детективъ", posterUrl: "", posterUrlPreview: "")]
-    }
-}
