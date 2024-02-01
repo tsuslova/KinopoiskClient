@@ -4,22 +4,24 @@
 //
 //  Created by Toto on 01.02.2024.
 //
-
 import UIKit
 import Combine
 
 final class FilmsListViewController: UITableViewController {
-    private var listViewModel = FilmsListViewModel()
+    
+    //TODO: move model, service & client initialization away from VC
+    private var listViewModel = FilmsListViewModel(filmsService: RemoteFilmsService(client: URLSessionHTTPClient()))
     private var bindings = Set<AnyCancellable>()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        bindViewModelToView()
     }
     
     func bindViewModelToView() {
         listViewModel.$films
             .receive(on: RunLoop.main)
-            .sink(receiveValue: { [weak self] _ in
+            .sink(receiveValue: { [weak self] films in
                 self?.tableView.reloadData()
             })
             .store(in: &bindings)
@@ -31,10 +33,11 @@ final class FilmsListViewController: UITableViewController {
             case .loadingFinished:
                 self?.finishLoading()
             case .error:
-                //TODO
+                //TODO: show error
                 self?.finishLoading()
             }
         }
+        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         listViewModel.$state
             .receive(on: RunLoop.main)
@@ -50,7 +53,11 @@ final class FilmsListViewController: UITableViewController {
         refreshControl?.endRefreshing()
         tableView.reloadData()
     }
-
+    
+    @objc func refresh() {
+        listViewModel.loadFilms()
+    }
+    
 }
 
 //MARK: - IBActions
