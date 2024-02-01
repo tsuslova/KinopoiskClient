@@ -20,10 +20,9 @@ public class URLSessionHTTPClient: HTTPClient {
         setupSessionConfiguration()
     }
     
-    public func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher? {
-        guard let request = getUrlRequest(with: url, parameters: parameters) else {
-            return nil
-        }
+    public func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher {
+        //TODO error handling
+        let request = getUrlRequest(with: url, parameters: parameters)!
         return session.dataTaskPublisher(for: request)
     }
     
@@ -40,6 +39,9 @@ public class URLSessionHTTPClient: HTTPClient {
             return nil
         }
 
+        if !parameters.isEmpty {
+            components.queryItems = parameters.urlQueryItems
+        }
         return components.url
     }
     
@@ -51,6 +53,7 @@ public class URLSessionHTTPClient: HTTPClient {
         var urlRequest = URLRequest(url: url)
         urlRequest.timeoutInterval = .defaultRequestTimeout
         urlRequest.httpMethod = .get
+        urlRequest.allHTTPHeaderFields = [.apiKey: APIKeyReader.apiKey]
         
         return urlRequest
     }

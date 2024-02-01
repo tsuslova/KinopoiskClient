@@ -33,6 +33,8 @@
 		99427A362B6B50DB008A8A91 /* SearchFilmsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */; };
 		99427A372B6B50DB008A8A91 /* FilmsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A332B6B50DB008A8A91 /* FilmsRequest.swift */; };
 		99427A382B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A352B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift */; };
+		99427A3B2B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A392B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift */; };
+		99427A3F2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A3E2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,9 @@
 		99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilmsRequest.swift; sourceTree = "<group>"; };
 		99427A332B6B50DB008A8A91 /* FilmsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsRequest.swift; sourceTree = "<group>"; };
 		99427A352B6B50DB008A8A91 /* CompactDictionaryRepresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompactDictionaryRepresentable.swift; sourceTree = "<group>"; };
+		99427A392B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsServiceEndToEndTests.swift; sourceTree = "<group>"; };
+		99427A3E2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		99427A422B6B6642008A8A91 /* KinopoiskClient.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = KinopoiskClient.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,7 +133,10 @@
 		994279E92B6B408A008A8A91 /* KinopoiskClientTests */ = {
 			isa = PBXGroup;
 			children = (
-				994279EA2B6B408A008A8A91 /* KinopoiskClientTests.swift */,
+				99427A422B6B6642008A8A91 /* KinopoiskClient.xctestplan */,
+				99427A402B6B6544008A8A91 /* UnitTests */,
+				99427A3D2B6B6533008A8A91 /* Helpers */,
+				99427A412B6B6576008A8A91 /* EndToEnd */,
 			);
 			path = KinopoiskClientTests;
 			sourceTree = "<group>";
@@ -274,6 +282,30 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		99427A3D2B6B6533008A8A91 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				99427A3E2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		99427A402B6B6544008A8A91 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				994279EA2B6B408A008A8A91 /* KinopoiskClientTests.swift */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		99427A412B6B6576008A8A91 /* EndToEnd */ = {
+			isa = PBXGroup;
+			children = (
+				99427A392B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift */,
+			);
+			path = EndToEnd;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -404,6 +436,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99427A3B2B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift in Sources */,
+				99427A3F2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				994279EB2B6B408A008A8A91 /* KinopoiskClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

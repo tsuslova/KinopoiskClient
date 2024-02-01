@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "242AEA7D-4854-4BE3-B596-73684EDC1B4B",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:KinopoiskClient.xcodeproj",
+      "identifier" : "994279CF2B6B4086008A8A91",
+      "name" : "KinopoiskClient"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:KinopoiskClient.xcodeproj",
+        "identifier" : "994279E52B6B408A008A8A91",
+        "name" : "KinopoiskClientTests"
+      }
+    }
+  ],
+  "version" : 1
+}

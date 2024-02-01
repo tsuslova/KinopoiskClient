@@ -54,4 +54,3 @@ extension Array where Element == FilmResponse {
         map { Film(filmResponse: $0) }
     }
 }
-

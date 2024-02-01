@@ -13,17 +13,34 @@ struct Film: Decodable, Hashable {
     let posterUrl: String
     let posterUrlPreview: String
     let ratingKinopoisk: Float?
-
-    var name: String {
-        nameRu ?? "Unknown movie"
-    }
     
-    //TODO: add mapping from FilmResponse
+    let countries: [String]
+    let genres: [String]
+    let year: Int
+    
     init(kinopoiskId: Int, nameRu: String?, posterUrl: String, posterUrlPreview: String, ratingKinopoisk: Float? = nil) {
         self.kinopoiskId = kinopoiskId
         self.nameRu = nameRu
         self.posterUrl = posterUrl
         self.posterUrlPreview = posterUrlPreview
         self.ratingKinopoisk = ratingKinopoisk
+        
+        self.countries = []
+        self.genres = []
+        self.year = 1900
+    }
+}
+
+extension Film {
+    init(filmResponse: FilmResponse) {
+        kinopoiskId = filmResponse.kinopoiskId
+        nameRu = filmResponse.nameRu
+        posterUrl = filmResponse.posterUrl
+        posterUrlPreview = filmResponse.posterUrlPreview
+        ratingKinopoisk = filmResponse.ratingKinopoisk
+        
+        countries = filmResponse.countries.map{ $0.country }
+        genres = filmResponse.genres.map{ $0.genre }
+        year = filmResponse.year
     }
 }
