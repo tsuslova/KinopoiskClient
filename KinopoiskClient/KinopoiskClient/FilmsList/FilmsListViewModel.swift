@@ -49,6 +49,7 @@ final class FilmsListViewModel {
         
         self.filmsService
             .get(page: currentPage)
+            .receive(on: RunLoop.main)
             .sink(receiveCompletion: loadingCompletionHandler, receiveValue: pageLoadedHandler)
             .store(in: &bindings)
     }

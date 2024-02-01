@@ -24,7 +24,6 @@ final class FilmsListViewController: UITableViewController {
 
     func bindViewModelToView() {
         listViewModel.$films
-            .receive(on: RunLoop.main)
             .sink(receiveValue: { [weak self] films in
                 self?.updateSections()
             })
@@ -42,7 +41,6 @@ final class FilmsListViewController: UITableViewController {
             }
         }
         listViewModel.$state
-            .receive(on: RunLoop.main)
             .sink(receiveValue: stateValueHandler)
             .store(in: &bindings)
         
