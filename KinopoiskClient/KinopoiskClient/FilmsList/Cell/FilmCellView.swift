@@ -27,6 +27,8 @@ final class FilmCellView: UITableViewCell {
     func viewModelChanged(_ viewModel: FilmCellViewModel) {
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
+        
+        posterImageView.image = nil
         viewModel.$posterImageData
             .compactMap { $0 }
             .map { UIImage(data: $0) }

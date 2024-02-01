@@ -15,23 +15,68 @@ enum ListViewModelState {
 }
 
 final class FilmsListViewModel {
-    @Published private(set) var state: ListViewModelState = .loading
+    //MARK:  Data prepared to be displayed on interface
+    @Published private(set) var state: ListViewModelState = InitialState.loadingState
+    @Published private(set) var nextPageIsLoading: Bool = InitialState.nextPageIsLoading
     
     enum Section {
         case films
     }
-    @Published private(set) var films: [Film] = []
+    @Published private(set) var films: [Film] = InitialState.films
     
+    //MARK: Initialization
     private var filmsService: FilmsService
     private var bindings = Set<AnyCancellable>()
     
-    private var currentPage = KinopoiskDefaults.firstPage
+    private(set) var lastRequestedPage: Int = InitialState.pageBeforeFirst
     
     init(filmsService: FilmsService) {
         self.filmsService = filmsService
     }
     
-    func loadFilms() {
+    private func resetToInitialState() {
+        state = InitialState.loadingState
+        nextPageIsLoading = InitialState.nextPageIsLoading
+        lastRequestedPage = InitialState.pageBeforeFirst
+        films = InitialState.films
+    }
+    
+    //We need a way to re-initialise the viewmodel but we cannot use initializer
+    //method from init. To avoid constants duplication and to make them more verbose
+    //move them to InitialState
+    private struct InitialState {
+        static let loadingState: ListViewModelState = .loadingFinished
+        static let nextPageIsLoading = false
+        static let pageBeforeFirst = KinopoiskDefaults.firstPage - 1
+        static let films: [Film] = []
+    }
+    
+    //MARK: Interface
+    func loadNextPageIfNeeded(for lastRow: Int) {
+        //For simplification assume for the moment that we load pages one by one
+        //(interface doesn't provide an ability for accessing pages in non-sequential way)
+        guard state != .loading else { return }
+        print("loadNextPageIfNeeded(\(lastRow)), lastRequestedPage = \(lastRequestedPage)")
+        if lastRow >= films.count - 1 {
+            loadNextPage()
+        }
+    }
+    
+    func reloadData() {
+        resetToInitialState()
+        loadNextPage()
+    }
+    
+    //MARK: Logic
+    private func loadNextPage() {
+        if lastRequestedPage > 0 {
+            nextPageIsLoading = true
+        }
+        lastRequestedPage = lastRequestedPage + 1
+        loadLastRequestedPage()
+    }
+    
+    private func loadLastRequestedPage() {
         state = .loading
         
         let loadingCompletionHandler: (Subscribers.Completion<ServiceError>) -> Void = { [weak self] completion in
@@ -41,14 +86,24 @@ final class FilmsListViewModel {
             case .finished:
                 self?.state = .loadingFinished
             }
+            self?.nextPageIsLoading = false
         }
         
         let pageLoadedHandler: ([Film]) -> Void = { [weak self] films in
-            self?.films = films
+            guard let self else { return }
+            var currentList = self.films
+            for film in films {
+                //Kinopoisk API might return the same items on different pages
+                //to avoid strange behaviour and crashes skip them
+                if !currentList.contains(film) {
+                    currentList.append(film)
+                }
+            }
+            self.films = currentList
         }
         
-        self.filmsService
-            .get(page: currentPage)
+        filmsService
+            .get(page: lastRequestedPage)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: loadingCompletionHandler, receiveValue: pageLoadedHandler)
             .store(in: &bindings)

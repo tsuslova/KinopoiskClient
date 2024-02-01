@@ -16,16 +16,26 @@ final class FilmsListViewController: UITableViewController {
     private var listViewModel = FilmsListViewModel(filmsService: RemoteFilmsService(client: URLSessionHTTPClient()))
     private var bindings = Set<AnyCancellable>()
     
+    @IBOutlet weak var bottomRefreshControl: UIActivityIndicatorView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModelToView()
-        refresh()
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        refreshTableViewData()
     }
 
     func bindViewModelToView() {
         listViewModel.$films
             .sink(receiveValue: { [weak self] films in
-                self?.updateSections()
+                guard let self else { return }
+                print("listViewModel.$films receive \(films.count) films for page \(self.listViewModel.lastRequestedPage)")
+                self.updateSections(films: films)
             })
             .store(in: &bindings)
         
@@ -43,8 +53,11 @@ final class FilmsListViewController: UITableViewController {
         listViewModel.$state
             .sink(receiveValue: stateValueHandler)
             .store(in: &bindings)
-        
-        refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        listViewModel.$nextPageIsLoading
+            .sink(receiveValue: { [weak bottomRefreshControl] in $0 ?  bottomRefreshControl?.startAnimating() :
+                bottomRefreshControl?.stopAnimating()
+            })
+            .store(in: &bindings)
     }
     
     private func startLoading() {
@@ -55,23 +68,28 @@ final class FilmsListViewController: UITableViewController {
         refreshControl?.endRefreshing()
     }
     
-    @objc func refresh() {
-        listViewModel.loadFilms()
+    func refreshTableViewData() {
+        var snapshot = Snapshot()
+        snapshot.deleteAllItems()
+        dataSource.apply(snapshot, animatingDifferences: false)
+        
+        listViewModel.reloadData()
     }
     
-    private func updateSections() {
+    private func updateSections(films: [Film]) {
         var snapshot = Snapshot()
         snapshot.appendSections([.films])
-        snapshot.appendItems(listViewModel.films)
-        dataSource.apply(snapshot, animatingDifferences: true)
+        snapshot.appendItems(films)
+        
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
-    
 }
 
 //MARK: - IBActions
 extension FilmsListViewController {
     @IBAction func refreshList(_ sender: Any) {
-        startLoading()
+        print("refreshList")
+        refreshTableViewData()
     }
 }
 
@@ -85,6 +103,19 @@ private extension FilmsListViewController {
             cell.viewModel = FilmCellViewModel(film: film)
             return cell
         })
+    }
+}
+
+extension FilmsListViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        print("prefetchRowsAt indexPaths \(indexPaths)")
+        listViewModel.loadNextPageIfNeeded(for: indexPaths.map(\.row).max() ?? 0)
         
+        //TODO: image pre-loading
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        //TODO: cancel image pre-loading
     }
 }
