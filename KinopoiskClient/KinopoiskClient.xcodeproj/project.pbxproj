@@ -176,10 +176,11 @@
 		99427A062B6B4411008A8A91 /* DataService */ = {
 			isa = PBXGroup;
 			children = (
+				99427A312B6B50DB008A8A91 /* Requests */,
+				99427A082B6B442C008A8A91 /* ResponseModel */,
 				99427A232B6B4C7C008A8A91 /* Workers */,
 				99427A222B6B4C3D008A8A91 /* APISettings */,
 				99427A112B6B4565008A8A91 /* HTTP */,
-				99427A082B6B442C008A8A91 /* ResponseModel */,
 				99427A0D2B6B4491008A8A91 /* ErrorsHandling */,
 			);
 			path = DataService;
@@ -251,7 +252,6 @@
 		99427A232B6B4C7C008A8A91 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
-				99427A312B6B50DB008A8A91 /* Requests */,
 				99427A262B6B4CE0008A8A91 /* Base */,
 				99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */,
 				99427A432B6B82AE008A8A91 /* RemoteImageLoader.swift */,
@@ -270,9 +270,9 @@
 		99427A312B6B50DB008A8A91 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
+				99427A342B6B50DB008A8A91 /* Helpers */,
 				99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */,
 				99427A332B6B50DB008A8A91 /* FilmsRequest.swift */,
-				99427A342B6B50DB008A8A91 /* Helpers */,
 			);
 			path = Requests;
 			sourceTree = "<group>";
