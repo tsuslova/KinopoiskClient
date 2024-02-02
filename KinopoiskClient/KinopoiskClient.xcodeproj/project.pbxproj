@@ -36,6 +36,8 @@
 		99427A3B2B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A392B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift */; };
 		99427A3F2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A3E2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift */; };
 		99427A442B6B82AE008A8A91 /* RemoteImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A432B6B82AE008A8A91 /* RemoteImageLoader.swift */; };
+		99427A492B6CBC38008A8A91 /* CacheImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A482B6CBC38008A8A91 /* CacheImageLoader.swift */; };
+		99427A4C2B6CBC68008A8A91 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A4B2B6CBC68008A8A91 /* FileCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +84,8 @@
 		99427A3E2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		99427A422B6B6642008A8A91 /* KinopoiskClient.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = KinopoiskClient.xctestplan; sourceTree = "<group>"; };
 		99427A432B6B82AE008A8A91 /* RemoteImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImageLoader.swift; sourceTree = "<group>"; };
+		99427A482B6CBC38008A8A91 /* CacheImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheImageLoader.swift; sourceTree = "<group>"; };
+		99427A4B2B6CBC68008A8A91 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,9 +256,11 @@
 		99427A232B6B4C7C008A8A91 /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				99427A4A2B6CBC5B008A8A91 /* Tools */,
 				99427A262B6B4CE0008A8A91 /* Base */,
 				99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */,
 				99427A432B6B82AE008A8A91 /* RemoteImageLoader.swift */,
+				99427A482B6CBC38008A8A91 /* CacheImageLoader.swift */,
 			);
 			path = Workers;
 			sourceTree = "<group>";
@@ -307,6 +313,14 @@
 				99427A392B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift */,
 			);
 			path = EndToEnd;
+			sourceTree = "<group>";
+		};
+		99427A4A2B6CBC5B008A8A91 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				99427A4B2B6CBC68008A8A91 /* FileCache.swift */,
+			);
+			path = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,6 +438,7 @@
 				99427A152B6B4565008A8A91 /* HTTPClient.swift in Sources */,
 				99427A282B6B4CE0008A8A91 /* FilmsService.swift in Sources */,
 				99427A0A2B6B4458008A8A91 /* FilmResponse.swift in Sources */,
+				99427A492B6CBC38008A8A91 /* CacheImageLoader.swift in Sources */,
 				99427A0C2B6B446B008A8A91 /* FilmsMapper.swift in Sources */,
 				99427A1A2B6B464A008A8A91 /* Film.swift in Sources */,
 				994279D82B6B4086008A8A91 /* FilmsListViewController.swift in Sources */,
@@ -432,6 +447,7 @@
 				99427A2C2B6B500A008A8A91 /* FilmsAPIEndpoint.swift in Sources */,
 				99427A182B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift in Sources */,
 				99427A212B6B4744008A8A91 /* FilmsListViewModel.swift in Sources */,
+				99427A4C2B6CBC68008A8A91 /* FileCache.swift in Sources */,
 				994279D62B6B4086008A8A91 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

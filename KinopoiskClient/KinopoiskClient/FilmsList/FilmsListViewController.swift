@@ -9,12 +9,13 @@ import Combine
 
 final class FilmsListViewController: UITableViewController {
     private lazy var dataSource = makeDataSource()
-    
     private lazy var listViewModel = makeViewModel()
     private var viewModelBindings = Set<AnyCancellable>()
     
     private let searchTextSubject = PassthroughSubject<String, Never>()
     private var viewBindings = Set<AnyCancellable>()
+    
+    private var cellsViewModels = [IndexPath: FilmCellViewModel]()
     
     @IBOutlet weak var bottomRefreshControl: UIActivityIndicatorView!
     
@@ -30,7 +31,7 @@ final class FilmsListViewController: UITableViewController {
         
         refreshTableViewData()
     }
-
+    
     //MARK: - View setup
     func bindViewModelToView() {
         listViewModel.$films
@@ -113,9 +114,22 @@ private extension FilmsListViewController {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: FilmCellView.identifier,
                 for: indexPath) as! FilmCellView
-            cell.viewModel = FilmCellViewModel(film: film)
+            cell.viewModel = self?.makeOrGetCellViewModel(for: indexPath, film: film)
             return cell
         })
+    }
+    
+    private func makeOrGetCellViewModel(for indexPath: IndexPath, film: Film) -> FilmCellViewModel {
+        if let vm = cellsViewModels[indexPath]{
+            if vm.checkViewModelIsFor(film: film) {
+                return vm
+            } else {
+                vm.cancelLoading()
+            }
+        }
+        let vm = FilmCellViewModel(film: film)
+        cellsViewModels[indexPath] = vm
+        return vm
     }
 }
 
@@ -135,12 +149,11 @@ extension FilmsListViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         print("prefetchRowsAt indexPaths \(indexPaths)")
         listViewModel.loadNextPageIfNeeded(for: indexPaths.map(\.row).max() ?? 0)
-        
-        //TODO: image pre-loading
     }
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        //TODO: cancel image pre-loading
+        indexPaths.forEach { cellsViewModels[$0]?.cancelLoading() }
+        
     }
 }
 

@@ -16,11 +16,9 @@ final class FilmCellViewModel {
     @Published var isImageLoading: Bool = false
     
     private let film: Film
+    private var imageLoadingService = CacheImageLoader()
     
     private var dataLoadingBindings = Set<AnyCancellable>()
-    
-    //TODO: this dependency should be injected from outside...
-    var imageLoadingService: ImageLoader = RemoteImageLoader(client: URLSessionHTTPClient())
     
     init(film: Film) {
         self.film = film
@@ -32,22 +30,30 @@ final class FilmCellViewModel {
         dataLoadingBindings.removeAll()
     }
     
+    func checkViewModelIsFor(film: Film) -> Bool {
+        return film == self.film
+    }
+    
     //MARK: Intrinsic logic
     private func setUpBindings() {
         title = film.nameRu ?? "Unnamed movie"
         fillDescription()
         
-        guard let url = URL(string: film.posterUrlPreview) else {
-            print("Error: wrong posterUrlPreview (\(film.posterUrlPreview))")
-            return
-        }
-        imageLoadingService.get(from: url)
-            .receive(on: RunLoop.main)
+        imageLoadingService.$imageData
             .sink { [weak self] _ in
                 self?.isImageLoading = false
             } receiveValue: { [weak self] data in
-                self?.posterImageData = data
+                if let imageData = data {
+                    self?.posterImageData = imageData
+                } else {
+                    self?.posterImageData = nil
+                    //TODO set placeholder image
+                }
             }.store(in: &dataLoadingBindings)
+        
+        if let url = URL(string: film.posterUrlPreview) {
+            imageLoadingService.fetch(from: url)
+        }
     }
     
     private func fillDescription() {
