@@ -11,7 +11,7 @@ import Combine
 enum ListViewModelState {
     case loading
     case loadingFinished
-    case error
+    case error(_ error: Error)
 }
 
 final class FilmsListViewModel {
@@ -23,6 +23,8 @@ final class FilmsListViewModel {
         case films
     }
     @Published private(set) var films: [Film] = InitialState.films
+    
+    private var searchedText: String?
     
     //MARK: Initialization
     private var filmsService: FilmsService
@@ -55,57 +57,75 @@ final class FilmsListViewModel {
     func loadNextPageIfNeeded(for lastRow: Int) {
         //For simplification assume for the moment that we load pages one by one
         //(interface doesn't provide an ability for accessing pages in non-sequential way)
-        guard state != .loading else { return }
+        guard case .loading = state else { return }
         print("loadNextPageIfNeeded(\(lastRow)), lastRequestedPage = \(lastRequestedPage)")
         if lastRow >= films.count - 1 {
             loadNextPage()
         }
     }
     
-    func reloadData() {
+    func reloadData(for text: String? = nil) {
         resetToInitialState()
+        searchedText = text
         loadNextPage()
     }
     
+    func search(text: String?) {
+        guard text != searchedText else {
+            print("Already searched for \(searchedText ?? "")")
+            return
+        }
+        guard text != nil || searchedText == nil else {
+            print("Nothing to be done")
+            return
+        }
+        reloadData(for: text)
+    }
+    
     //MARK: Logic
+    
     private func loadNextPage() {
         if lastRequestedPage > 0 {
             nextPageIsLoading = true
         }
         lastRequestedPage = lastRequestedPage + 1
+        
         loadLastRequestedPage()
+    }
+    
+    private func handleLoadingCompletion(_ completion: Subscribers.Completion<ServiceError>) {
+        switch completion {
+        case .failure(let error):
+            state = .error(error)
+        case .finished:
+            state = .loadingFinished
+        }
+        nextPageIsLoading = false
+    }
+    
+    private func handlePageLoading(films: [Film]) {
+        var currentList = self.films
+        for film in films {
+            //Kinopoisk API might return the same items on different pages
+            //to avoid strange behaviour and crashes skip them
+            if !currentList.contains(film) {
+                currentList.append(film)
+            }
+        }
+        self.films = currentList
     }
     
     private func loadLastRequestedPage() {
         state = .loading
         
-        let loadingCompletionHandler: (Subscribers.Completion<ServiceError>) -> Void = { [weak self] completion in
-            switch completion {
-            case .failure:
-                self?.state = .error
-            case .finished:
-                self?.state = .loadingFinished
-            }
-            self?.nextPageIsLoading = false
-        }
-        
-        let pageLoadedHandler: ([Film]) -> Void = { [weak self] films in
-            guard let self else { return }
-            var currentList = self.films
-            for film in films {
-                //Kinopoisk API might return the same items on different pages
-                //to avoid strange behaviour and crashes skip them
-                if !currentList.contains(film) {
-                    currentList.append(film)
-                }
-            }
-            self.films = currentList
-        }
-        
         filmsService
-            .get(page: lastRequestedPage)
+            .get(page: lastRequestedPage, keyword: searchedText)
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: loadingCompletionHandler, receiveValue: pageLoadedHandler)
+            .sink(receiveCompletion: { [weak self] completion in
+                self?.handleLoadingCompletion(completion)
+            }, receiveValue: { [weak self] films in
+                self?.handlePageLoading(films: films)
+            })
             .store(in: &bindings)
     }
 }

@@ -9,5 +9,5 @@ import Foundation
 import Combine
 
 protocol FilmsService {
-    func get(page: Int) -> AnyPublisher<[Film], ServiceError>
+    func get(page: Int, keyword: String?) -> AnyPublisher<[Film], ServiceError>
 }

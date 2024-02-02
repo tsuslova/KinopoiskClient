@@ -27,7 +27,7 @@
 		99427A252B6B4CAF008A8A91 /* RemoteFilmsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */; };
 		99427A282B6B4CE0008A8A91 /* FilmsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A272B6B4CE0008A8A91 /* FilmsService.swift */; };
 		99427A2A2B6B4FFC008A8A91 /* KinopoiskDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A292B6B4FFC008A8A91 /* KinopoiskDefaults.swift */; };
-		99427A2C2B6B500A008A8A91 /* KinopoiskAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A2B2B6B500A008A8A91 /* KinopoiskAPI.swift */; };
+		99427A2C2B6B500A008A8A91 /* FilmsAPIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A2B2B6B500A008A8A91 /* FilmsAPIEndpoint.swift */; };
 		99427A2F2B6B5026008A8A91 /* APIKeyReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A2D2B6B5026008A8A91 /* APIKeyReader.swift */; };
 		99427A302B6B5026008A8A91 /* APIKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99427A2E2B6B5026008A8A91 /* APIKey.plist */; };
 		99427A362B6B50DB008A8A91 /* SearchFilmsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */; };
@@ -72,7 +72,7 @@
 		99427A242B6B4CAF008A8A91 /* RemoteFilmsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteFilmsService.swift; sourceTree = "<group>"; };
 		99427A272B6B4CE0008A8A91 /* FilmsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsService.swift; sourceTree = "<group>"; };
 		99427A292B6B4FFC008A8A91 /* KinopoiskDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KinopoiskDefaults.swift; sourceTree = "<group>"; };
-		99427A2B2B6B500A008A8A91 /* KinopoiskAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KinopoiskAPI.swift; sourceTree = "<group>"; };
+		99427A2B2B6B500A008A8A91 /* FilmsAPIEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilmsAPIEndpoint.swift; sourceTree = "<group>"; };
 		99427A2D2B6B5026008A8A91 /* APIKeyReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIKeyReader.swift; sourceTree = "<group>"; };
 		99427A2E2B6B5026008A8A91 /* APIKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = APIKey.plist; sourceTree = "<group>"; };
 		99427A322B6B50DB008A8A91 /* SearchFilmsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchFilmsRequest.swift; sourceTree = "<group>"; };
@@ -243,7 +243,7 @@
 			children = (
 				99427A2E2B6B5026008A8A91 /* APIKey.plist */,
 				99427A2D2B6B5026008A8A91 /* APIKeyReader.swift */,
-				99427A2B2B6B500A008A8A91 /* KinopoiskAPI.swift */,
+				99427A2B2B6B500A008A8A91 /* FilmsAPIEndpoint.swift */,
 				99427A292B6B4FFC008A8A91 /* KinopoiskDefaults.swift */,
 			);
 			path = APISettings;
@@ -429,7 +429,7 @@
 				994279D82B6B4086008A8A91 /* FilmsListViewController.swift in Sources */,
 				99427A1F2B6B4701008A8A91 /* FilmCellView.swift in Sources */,
 				994279D42B6B4086008A8A91 /* AppDelegate.swift in Sources */,
-				99427A2C2B6B500A008A8A91 /* KinopoiskAPI.swift in Sources */,
+				99427A2C2B6B500A008A8A91 /* FilmsAPIEndpoint.swift in Sources */,
 				99427A182B6B459E008A8A91 /* HTTPURLResponse+StatusCode.swift in Sources */,
 				99427A212B6B4744008A8A91 /* FilmsListViewModel.swift in Sources */,
 				994279D62B6B4086008A8A91 /* SceneDelegate.swift in Sources */,

@@ -1,5 +1,5 @@
 //
-//  KinopoiskAPI.swift
+//  FilmsAPIEndpoint.swift
 //  Kinopoisk
 //
 //  Created by Toto on 29.01.2024.
