@@ -57,8 +57,8 @@ final class CacheImageLoader: ObservableObject {
                     try? self?.saveImageDataToCache(imageData, to: imageURL)
                 })
             .sink(
-                receiveCompletion: { [weak self] in
-                    if case .failure = $0 {
+                receiveCompletion: { [weak self] completion in
+                    if case .failure = completion {
                         self?.state = .failed
                     }
                 }, receiveValue: { [weak self] image in
@@ -66,7 +66,11 @@ final class CacheImageLoader: ObservableObject {
                     self?.state = .success
                 })
     }
-    
+
+    func cancelLoading() {
+        cancellable = nil
+    }
+
     //MARK: - Intrinsic logic
     private func saveImageDataToCache(_ data: Data, to url: URL) throws {
         if !cache.fileExists(atPath: imagesDirectoryURL.path) {

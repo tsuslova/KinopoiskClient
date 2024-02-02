@@ -84,7 +84,7 @@ final class FilmsListViewController: UITableViewController {
     }
     
     private func refreshTableViewData() {
-        var snapshot = makeSnapshot()
+        let snapshot = makeSnapshot()
         dataSource.apply(snapshot, animatingDifferences: false)
         
         listViewModel.reloadData()

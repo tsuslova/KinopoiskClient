@@ -27,6 +27,7 @@ final class FilmCellViewModel {
     }
     
     func cancelLoading() {
+        imageLoadingService.cancelLoading()
         dataLoadingBindings.removeAll()
     }
     

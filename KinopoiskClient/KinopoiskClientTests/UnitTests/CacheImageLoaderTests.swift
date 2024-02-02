@@ -10,18 +10,40 @@ import Combine
 @testable import KinopoiskClient
 
 final class CacheImageLoaderTests: XCTestCase {
-
+    var bindings = Set<AnyCancellable>()
+    
     func test_init_doesNotPerformAnyURLRequest() {
-        let (sut, cache) = makeSUT()
+        let (_, loader, cache) = makeSUT()
 
-        XCTAssertEqual(cache.storage.count, 0, "Assumed to have no cache before first request")
+        XCTAssertEqual(loader.requestedURLs.count, 0, "Expected to have no requested URL before first request")
+        XCTAssertEqual(cache.storage.count, 0, "Expected to have no cache before first request")
     }
     
     func test_fetchValidURL_returnsImage() throws {
-        //let (sut, loader) = makeSUT()
+        let (sut, loader, cache) = makeSUT()
+        let url = anyURL()
+        
+        let expectation = expectation(description: "Load image")
+        
+        sut.$imageData
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { _ in
+                XCTFail()
+            }, receiveValue: { _ in
+                expectation.fulfill()
+            })
+            .store(in: &bindings)
+        
+        sut.fetch(from: url)
+        
+        wait(for: [expectation], timeout: 1)
+        
+        XCTAssertNotNil(sut.imageData, "Expected to load image data")
+        XCTAssertEqual(sut.state, CacheImageLoader.State.success, "Expected image fetching state is .success")
     }
      
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: CacheImageLoader, cache: MockFileCache) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: CacheImageLoader, loader: ImageLoaderSpy, cache: MockFileCache) {
         let loader = ImageLoaderSpy()
         let cache = MockFileCache()
         let sut = CacheImageLoader(remoteLoader: loader, cache: cache)
@@ -29,6 +51,6 @@ final class CacheImageLoaderTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(cache, file: file, line: line)
-        return (sut, cache)
+        return (sut, loader, cache)
     }
 }
