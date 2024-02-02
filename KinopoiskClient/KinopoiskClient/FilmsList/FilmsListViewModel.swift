@@ -12,6 +12,13 @@ enum ListViewModelState {
     case loading
     case loadingFinished
     case error(_ error: Error)
+    
+    var isLoading: Bool {
+        if case .loading = self {
+            return true
+        }
+        return false
+    }
 }
 
 final class FilmsListViewModel {
@@ -57,7 +64,7 @@ final class FilmsListViewModel {
     func loadNextPageIfNeeded(for lastRow: Int) {
         //For simplification assume for the moment that we load pages one by one
         //(interface doesn't provide an ability for accessing pages in non-sequential way)
-        guard case .loading = state else { return }
+        guard !state.isLoading else { return }
         print("loadNextPageIfNeeded(\(lastRow)), lastRequestedPage = \(lastRequestedPage)")
         if lastRow >= films.count - 1 {
             loadNextPage()
