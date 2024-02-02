@@ -41,6 +41,9 @@ final class CacheImageLoaderTests: XCTestCase {
         
         XCTAssertNotNil(sut.imageData, "Expected to load image data")
         XCTAssertEqual(sut.state, CacheImageLoader.State.success, "Expected image fetching state is .success")
+        
+        XCTAssertEqual(loader.requestedURLs.count, 1, "Expected to load 1 image on loading 1 URL")
+        XCTAssertEqual(cache.storage.count, 1, "Expected to cache 1 image on loading 1 URL")
     }
      
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: CacheImageLoader, loader: ImageLoaderSpy, cache: MockFileCache) {
