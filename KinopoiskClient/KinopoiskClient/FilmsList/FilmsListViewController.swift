@@ -110,7 +110,7 @@ extension FilmsListViewController {
 //MARK: - TableView Datasource
 private extension FilmsListViewController {
     private func makeDataSource() -> UITableViewDiffableDataSource<FilmsListViewModel.Section, Film> {
-        return UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, film in
+        return UITableViewDiffableDataSource(tableView: tableView, cellProvider: { [weak self] tableView, indexPath, film in
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: FilmCellView.identifier,
                 for: indexPath) as! FilmCellView

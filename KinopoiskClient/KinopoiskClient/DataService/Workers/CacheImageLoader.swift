@@ -21,9 +21,10 @@ final class CacheImageLoader: ObservableObject {
     private let cache: FileCacheable
     private let imagesDirectoryURL: URL
     
-    init(loader: ImageLoader = RemoteImageLoader(),
+    //MARK: - Interface
+    init(remoteLoader: ImageLoader = RemoteImageLoader(),
          cache: FileCacheable = FileCache()) {
-        self.loader = loader
+        self.loader = remoteLoader
         self.cache = cache
         self.state = .none
         
@@ -66,6 +67,7 @@ final class CacheImageLoader: ObservableObject {
                 })
     }
     
+    //MARK: - Intrinsic logic
     private func saveImageDataToCache(_ data: Data, to url: URL) throws {
         if !cache.fileExists(atPath: imagesDirectoryURL.path) {
             cache.createDirectory(atPath: imagesDirectoryURL.path)
@@ -74,6 +76,7 @@ final class CacheImageLoader: ObservableObject {
     }
 }
 
+//MARK: - Loading state
 extension CacheImageLoader {
     enum State {
         case failed, none

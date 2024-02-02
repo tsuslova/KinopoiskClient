@@ -15,7 +15,6 @@ protocol FileCacheable {
     func remove(at path: URL)
     func fileExists(atPath path: String) -> Bool
     func createDirectory(atPath path: String)
-    func sizeDescription(of path: URL) -> String
 }
 
 struct FileCache: FileCacheable {
@@ -43,26 +42,5 @@ struct FileCache: FileCacheable {
         try? FileManager.default.createDirectory(
             atPath: path,
             withIntermediateDirectories: true)
-    }
-    
-    func sizeDescription(of path: URL) -> String {
-        let directoryPath = path.path
-        guard let contents = try? FileManager.default.contentsOfDirectory(atPath: directoryPath) else { return "" }
-
-        var directorySize: Int64 = 0
-
-        for content in contents {
-            do {
-                let fullContentPath = directoryPath + "/" + content
-                let contentAttributes = try FileManager.default.attributesOfItem(atPath: fullContentPath)
-                directorySize += contentAttributes[.size] as? Int64 ?? 0
-            } catch {
-                continue
-            }
-        }
-
-        let directorySizeString = ByteCountFormatter.string(fromByteCount: directorySize, countStyle: .file)
-
-        return directorySizeString
     }
 }
