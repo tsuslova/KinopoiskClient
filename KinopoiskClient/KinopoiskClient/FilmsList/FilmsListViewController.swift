@@ -8,19 +8,17 @@ import UIKit
 import Combine
 
 final class FilmsListViewController: UITableViewController {
-    private typealias DataSource = UITableViewDiffableDataSource<FilmsListViewModel.Section, Film>
-    private typealias Snapshot = NSDiffableDataSourceSnapshot<FilmsListViewModel.Section, Film>
     private lazy var dataSource = makeDataSource()
     
-    //TODO: move model, service & client initialization away from VC
-    private var listViewModel = FilmsListViewModel(filmsService: RemoteFilmsService(client: URLSessionHTTPClient()))
+    private lazy var listViewModel = makeViewModel()
     private var viewModelBindings = Set<AnyCancellable>()
+    
+    private let searchTextSubject = PassthroughSubject<String, Never>()
+    private var viewBindings = Set<AnyCancellable>()
     
     @IBOutlet weak var bottomRefreshControl: UIActivityIndicatorView!
     
-    let searchTextSubject = PassthroughSubject<String, Never>()
-    private var viewBindings = Set<AnyCancellable>()
-    
+    //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModelToView()
@@ -33,6 +31,7 @@ final class FilmsListViewController: UITableViewController {
         refreshTableViewData()
     }
 
+    //MARK: - View setup
     func bindViewModelToView() {
         listViewModel.$films
             .sink(receiveValue: { [weak self] films in
@@ -68,15 +67,11 @@ final class FilmsListViewController: UITableViewController {
     
     func bindViewEvents() {
         searchTextSubject
-            .filter { $0.count > 2 }
-            .throttle(for: 1.0, scheduler: RunLoop.main, latest: true)
-            .sink { searchText in
-                print("\(searchText)")
-            } receiveValue: { [weak self] lastValue in
-                print("lastValue = \(lastValue)")
-                self?.listViewModel.search(text: lastValue)
-            }.store(in: &viewBindings)
-
+            .filter { $0.count > 1 }
+            .sink (receiveValue: { [weak self] searchText in
+                print("lastValue = \(searchText)")
+                self?.listViewModel.search(text: searchText)
+            }).store(in: &viewBindings)
     }
     
     private func startLoading() {
@@ -87,16 +82,15 @@ final class FilmsListViewController: UITableViewController {
         refreshControl?.endRefreshing()
     }
     
-    func refreshTableViewData() {
-        var snapshot = Snapshot()
-        snapshot.deleteAllItems()
+    private func refreshTableViewData() {
+        var snapshot = makeSnapshot()
         dataSource.apply(snapshot, animatingDifferences: false)
         
         listViewModel.reloadData()
     }
     
     private func updateSections(films: [Film]) {
-        var snapshot = Snapshot()
+        var snapshot = makeSnapshot()
         snapshot.appendSections([.films])
         snapshot.appendItems(films)
         
@@ -114,7 +108,7 @@ extension FilmsListViewController {
 
 //MARK: - TableView Datasource
 private extension FilmsListViewController {
-    private func makeDataSource() -> DataSource {
+    private func makeDataSource() -> UITableViewDiffableDataSource<FilmsListViewModel.Section, Film> {
         return UITableViewDiffableDataSource(tableView: tableView, cellProvider: { tableView, indexPath, film in
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: FilmCellView.identifier,
@@ -125,6 +119,18 @@ private extension FilmsListViewController {
     }
 }
 
+//MARK: - Private setup
+private extension FilmsListViewController {
+    func makeViewModel() -> FilmsListViewModel {
+        FilmsListViewModel(filmsService: RemoteFilmsService())
+    }
+    
+    func makeSnapshot() -> NSDiffableDataSourceSnapshot<FilmsListViewModel.Section, Film> {
+        NSDiffableDataSourceSnapshot<FilmsListViewModel.Section, Film>()
+    }
+}
+
+//MARK: - UITableViewDataSourcePrefetching
 extension FilmsListViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         print("prefetchRowsAt indexPaths \(indexPaths)")
@@ -133,23 +139,25 @@ extension FilmsListViewController: UITableViewDataSourcePrefetching {
         //TODO: image pre-loading
     }
     
-    
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         //TODO: cancel image pre-loading
     }
 }
 
+//MARK: - UISearchBarDelegate
 extension FilmsListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        searchTextSubject.send(searchBar.text ?? "")
+        print("textDidChange")
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        searchTextSubject.send(searchBar.text ?? "")
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
+        refreshTableViewData()
     }
 }
