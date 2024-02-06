@@ -70,8 +70,9 @@ final class FilmsServiceEndToEndTests: XCTestCase {
             .store(in: &cancellables)
         waitForExpectations(timeout: 10)
         
-        XCTAssertNil(error)
-        XCTAssertEqual(film?.kinopoiskId ?? 0, filmId)
+        XCTAssertNil(error, "Expected to load film, got error \(error!)")
+        XCTAssertEqual(film!.kinopoiskId, filmId, "Expected to load film with ID we requested, got \(film!.kinopoiskId)")
+        XCTAssertNotNil(film?.coverUrl, "Expected to have coverUrl filled")
     }
     
     // MARK: - Helpers
