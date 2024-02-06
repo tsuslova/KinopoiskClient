@@ -49,8 +49,22 @@ final class RemoteFilmsService: FilmsService {
                 .eraseToAnyPublisher()
         }
         return publisher
-            .tryMap(FilmsResponseMapper.map)
+            .tryMap(FilmResponse.map)
             .map { $0.toModels() }
+            .mapError(ServiceError.map)
+            .eraseToAnyPublisher()
+    }
+    
+    func getDetails(filmId: String) -> AnyPublisher<Film, ServiceError> {
+        let url = FilmsAPIEndpoint.details(filmId: filmId).url
+        
+        guard let publisher = client.dataTaskPublisher(for: url) else {
+            return Fail(error: ServiceError.badRequest)
+                .eraseToAnyPublisher()
+        }
+        return publisher
+            .tryMap(FilmDetailsResponse.map)
+            .map { Film(filmDetailsResponse: $0) }
             .mapError(ServiceError.map)
             .eraseToAnyPublisher()
     }

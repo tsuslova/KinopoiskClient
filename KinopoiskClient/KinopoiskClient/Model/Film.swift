@@ -12,35 +12,41 @@ struct Film: Decodable, Hashable {
     let nameRu: String?
     let posterUrl: String
     let posterUrlPreview: String
+    let coverUrl: String?
     let ratingKinopoisk: Float?
     
     let countries: [String]
     let genres: [String]
     let year: Int
-    
-    init(kinopoiskId: Int, nameRu: String?, posterUrl: String, posterUrlPreview: String, ratingKinopoisk: Float? = nil) {
-        self.kinopoiskId = kinopoiskId
-        self.nameRu = nameRu
-        self.posterUrl = posterUrl
-        self.posterUrlPreview = posterUrlPreview
-        self.ratingKinopoisk = ratingKinopoisk
-        
-        self.countries = []
-        self.genres = []
-        self.year = 1900
-    }
 }
 
+//from film list (search, basic)
 extension Film {
     init(filmResponse: FilmResponse) {
         kinopoiskId = filmResponse.kinopoiskId
         nameRu = filmResponse.nameRu
         posterUrl = filmResponse.posterUrl
         posterUrlPreview = filmResponse.posterUrlPreview
+        coverUrl = nil
         ratingKinopoisk = filmResponse.ratingKinopoisk
         
         countries = filmResponse.countries.map{ $0.country }
         genres = filmResponse.genres.map{ $0.genre }
         year = filmResponse.year
+    }
+}
+
+extension Film {
+    init(filmDetailsResponse: FilmDetailsResponse) {
+        kinopoiskId = filmDetailsResponse.kinopoiskId
+        nameRu = filmDetailsResponse.nameRu
+        posterUrl = filmDetailsResponse.posterUrl
+        coverUrl = filmDetailsResponse.coverUrl
+        posterUrlPreview = filmDetailsResponse.posterUrlPreview
+        ratingKinopoisk = filmDetailsResponse.ratingKinopoisk
+        
+        countries = filmDetailsResponse.countries.map{ $0.country }
+        genres = filmDetailsResponse.genres.map{ $0.genre }
+        year = filmDetailsResponse.year
     }
 }

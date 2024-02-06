@@ -14,6 +14,12 @@ struct GenreResponse: Decodable, Equatable, Hashable {
     let genre: String
 }
 
+private struct FilmsResponse: Decodable {
+    let total: Int
+    let totalPages: Int
+    let items: [FilmResponse]
+}
+
 struct FilmResponse: Decodable, Hashable {
     let kinopoiskId: Int
     let nameRu: String?
@@ -24,4 +30,10 @@ struct FilmResponse: Decodable, Hashable {
     let countries: [CountryResponse]
     let genres: [GenreResponse]
     let year: Int
+    
+    static func map(_ data: Data, response: URLResponse) throws -> [FilmResponse] {
+        let resp: FilmsResponse = try mapGeneric(data, response: response)
+        return resp.items
+    }
+
 }
