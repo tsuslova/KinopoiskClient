@@ -45,6 +45,7 @@
 		99427A572B6CDF38008A8A91 /* ImageLoaderSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A532B6CDF37008A8A91 /* ImageLoaderSpy.swift */; };
 		99427A592B6CDF79008A8A91 /* CacheImageLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99427A582B6CDF79008A8A91 /* CacheImageLoaderTests.swift */; };
 		99D3D4332B72236A0064E497 /* FilmDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D3D4322B72236A0064E497 /* FilmDetailsResponse.swift */; };
+		99D3D4352B722C660064E497 /* RemoteFilmsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D3D4342B722C660064E497 /* RemoteFilmsServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,7 @@
 		99427A532B6CDF37008A8A91 /* ImageLoaderSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLoaderSpy.swift; sourceTree = "<group>"; };
 		99427A582B6CDF79008A8A91 /* CacheImageLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheImageLoaderTests.swift; sourceTree = "<group>"; };
 		99D3D4322B72236A0064E497 /* FilmDetailsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilmDetailsResponse.swift; sourceTree = "<group>"; };
+		99D3D4342B722C660064E497 /* RemoteFilmsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFilmsServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,7 +146,6 @@
 				99427A072B6B441B008A8A91 /* Model */,
 				99427A062B6B4411008A8A91 /* DataService */,
 				99427A052B6B4189008A8A91 /* FilmsList */,
-				99427A662B6CF5F9008A8A91 /* FilmDetails */,
 				99427A032B6B415D008A8A91 /* UI */,
 				99427A042B6B416F008A8A91 /* General */,
 			);
@@ -322,6 +323,7 @@
 				99427A4F2B6CDF37008A8A91 /* Mocks */,
 				994279EA2B6B408A008A8A91 /* KinopoiskClientTests.swift */,
 				99427A582B6CDF79008A8A91 /* CacheImageLoaderTests.swift */,
+				99D3D4342B722C660064E497 /* RemoteFilmsServiceTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -490,6 +492,7 @@
 				99427A4E2B6CDF22008A8A91 /* SharedTestHelpers.swift in Sources */,
 				99427A552B6CDF38008A8A91 /* URLProtocolStub.swift in Sources */,
 				99427A3B2B6B6493008A8A91 /* FilmsServiceEndToEndTests.swift in Sources */,
+				99D3D4352B722C660064E497 /* RemoteFilmsServiceTests.swift in Sources */,
 				99427A592B6CDF79008A8A91 /* CacheImageLoaderTests.swift in Sources */,
 				99427A3F2B6B653F008A8A91 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				99427A562B6CDF38008A8A91 /* MockFileCache.swift in Sources */,

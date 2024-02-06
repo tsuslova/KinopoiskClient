@@ -8,13 +8,21 @@
 import Foundation
 @testable import KinopoiskClient
 
-//class HTTPClientSpy: HTTPClient {
+class HTTPClientSpy: HTTPClient {
 //    private var messages = [(url: URL, completion: Result<(Data, HTTPURLResponse), Error> -> Void)]()
-//    
-//    var requestedURLs: [URL] {
-//        return messages.map { $0.url }
-//    }
-//    
+    
+    var requestedURLs: [URL] = []
+    
+    func dataTaskPublisher(for url: URL) -> URLSession.DataTaskPublisher? {
+        requestedURLs.append(url)
+        return nil
+    }
+    
+    func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher? {
+        requestedURLs.append(url)
+        return nil
+    }
+//
 //    func get(from url: URL, completion: @escaping (HTTPClient.Result) -> Void) -> HTTPClientTask {
 //        messages.append((url, completion))
 //        return Task()
@@ -31,4 +39,4 @@ import Foundation
 //                                       headerFields: nil)!
 //        messages[index].completion(HTTPClient.Result.success((data, response)))
 //    }
-//}
+}
