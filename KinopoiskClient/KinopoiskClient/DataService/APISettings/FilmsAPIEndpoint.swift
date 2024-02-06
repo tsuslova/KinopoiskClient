@@ -18,7 +18,7 @@ enum FilmsAPIEndpoint{
     
     case root
     case search
-    case details(filmId: String)
+    case details(filmId: Int)
     
     static var api: APIType = .films
     

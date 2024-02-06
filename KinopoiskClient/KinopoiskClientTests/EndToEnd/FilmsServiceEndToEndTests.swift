@@ -45,6 +45,35 @@ final class FilmsServiceEndToEndTests: XCTestCase {
         XCTAssertNotEqual(films?.count ?? 0, 0)
     }
     
+    func test_endToEndGetFilmDetails_returnsValidFilm() {
+        let loader = RemoteFilmsService(client: ephemeralClient())
+        trackForMemoryLeaks(loader)
+        
+        var error: Error?
+        let exp = expectation(description: "Wait for load completion")
+        var film: Film?
+        
+        let filmId = 301
+        
+        loader.getDetails(filmId: filmId)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let receivedError):
+                    error = receivedError
+                }
+                exp.fulfill()
+            } receiveValue: { receivedFilm in
+                film = receivedFilm
+            }
+            .store(in: &cancellables)
+        waitForExpectations(timeout: 10)
+        
+        XCTAssertNil(error)
+        XCTAssertEqual(film?.kinopoiskId ?? 0, filmId)
+    }
+    
     // MARK: - Helpers
     func checkForAPIKey() {
         if APIKeyReader.apiKey == "" {

@@ -10,5 +10,5 @@ import Combine
 
 protocol FilmsService {
     func get(page: Int, keyword: String?) -> AnyPublisher<[Film], ServiceError>
-    func getDetails(filmId: String) -> AnyPublisher<Film, ServiceError>
+    func getDetails(filmId: Int) -> AnyPublisher<Film, ServiceError>
 }

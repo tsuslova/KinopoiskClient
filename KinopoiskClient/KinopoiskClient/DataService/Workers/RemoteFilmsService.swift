@@ -55,7 +55,7 @@ final class RemoteFilmsService: FilmsService {
             .eraseToAnyPublisher()
     }
     
-    func getDetails(filmId: String) -> AnyPublisher<Film, ServiceError> {
+    func getDetails(filmId: Int) -> AnyPublisher<Film, ServiceError> {
         let url = FilmsAPIEndpoint.details(filmId: filmId).url
         
         guard let publisher = client.dataTaskPublisher(for: url) else {
