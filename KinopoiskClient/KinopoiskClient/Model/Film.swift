@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Film: Decodable, Hashable {
+struct Film: Hashable {
     let kinopoiskId: Int
     let nameRu: String?
     let posterUrl: String
@@ -18,6 +18,14 @@ struct Film: Decodable, Hashable {
     let countries: [String]
     let genres: [String]
     let year: Int
+    
+    let nameOriginal: String?
+    let ratingVoteCount: Int?
+    let filmLength: Int?
+    let ratingAgeLimits: String?
+    
+    let shortDescription: String?
+    let description: String?
 }
 
 //from film list (search, basic)
@@ -33,6 +41,15 @@ extension Film {
         countries = filmResponse.countries.map{ $0.country }
         genres = filmResponse.genres.map{ $0.genre }
         year = filmResponse.year
+        
+        //Only available in Details Response
+        nameOriginal = nil
+        ratingVoteCount = nil
+        filmLength = nil
+        ratingAgeLimits = nil
+        
+        shortDescription = nil
+        description = nil
     }
 }
 
@@ -48,5 +65,13 @@ extension Film {
         countries = filmDetailsResponse.countries.map{ $0.country }
         genres = filmDetailsResponse.genres.map{ $0.genre }
         year = filmDetailsResponse.year
+        
+        nameOriginal = filmDetailsResponse.nameOriginal
+        ratingVoteCount = filmDetailsResponse.ratingVoteCount
+        filmLength = filmDetailsResponse.filmLength
+        ratingAgeLimits = filmDetailsResponse.ratingAgeLimits
+        
+        shortDescription = filmDetailsResponse.shortDescription
+        description = filmDetailsResponse.description
     }
 }
