@@ -15,6 +15,12 @@ func anyURL() -> URL {
     return URL(string: "http://a-url.com")!
 }
 
+func anyFileURL() -> URL {
+    return FileManager.default
+        .urls(for: .cachesDirectory, in: .userDomainMask)
+        .first!
+}
+
 func anyData() -> Data {
     return Data("any data".utf8)
 }

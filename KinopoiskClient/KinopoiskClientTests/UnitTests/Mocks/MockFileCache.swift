@@ -9,7 +9,7 @@
 import Foundation
 
 class MockFileCache: FileCacheable {
-    var directoryURL: URL = anyURL()
+    var directoryURL: URL = anyFileURL()
     
     var storage: [(String, Data)] = []
     
@@ -22,7 +22,7 @@ class MockFileCache: FileCacheable {
     }
     
     func get(from path: URL) -> Data? {
-        storage.first { $0.0 == path.absoluteString }?.1
+        return storage.first { $0.0 == path.absoluteString }?.1
     }
     
     func remove(at path: URL) {
@@ -35,4 +35,9 @@ class MockFileCache: FileCacheable {
     
     func createDirectory(atPath path: String) {
     }
+    
+    func path(for url: URL) -> URL {
+        directoryURL.appendingPathComponent(url.deletingPathExtension().lastPathComponent)
+    }
+    
 }

@@ -45,7 +45,32 @@ final class CacheImageLoaderTests: XCTestCase {
         XCTAssertEqual(loader.requestedURLs.count, 1, "Expected to load 1 image on loading 1 URL")
         XCTAssertEqual(cache.storage.count, 1, "Expected to cache 1 image on loading 1 URL")
     }
-     
+    
+    func test_loadImageWithCacheAvailable_fetchesCachedData() {
+        let (sut, _, cache) = makeSUT()
+        let url = anyURL()
+        let data = anyData()
+        cache.save(data, to: url)
+        
+        let expectation = expectation(description: "Load image")
+        
+        sut.$imageData
+            .compactMap { $0 }
+            .sink(receiveCompletion: { completion in
+                XCTFail("Expected to load image data")
+            }, receiveValue: { data in
+                expectation.fulfill()
+            })
+            .store(in: &bindings)
+        sut.fetch(from: url)
+        
+        cache.remove(at: url)
+        wait(for: [expectation], timeout: 1)
+        XCTAssertNotNil(sut.imageData, "Expected to load image data")
+        XCTAssertEqual(sut.imageData, data, "Expected to load data saved before to cache")
+    }
+    
+
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: CacheImageLoader, loader: ImageLoaderSpy, cache: MockFileCache) {
         let loader = ImageLoaderSpy()
         let cache = MockFileCache()
