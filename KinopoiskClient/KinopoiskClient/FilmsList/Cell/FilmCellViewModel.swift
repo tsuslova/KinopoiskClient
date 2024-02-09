@@ -53,7 +53,7 @@ final class FilmCellViewModel {
     
     private var dataLoadingBindings = Set<AnyCancellable>()
     
-    public var posterImageViewModel: ImageViewModel?
+    private(set) var posterImageViewModel: ImageViewModel?
     
     init(film: Film) {
         if let url = URL(string: film.posterUrlPreview) {

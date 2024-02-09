@@ -4,68 +4,113 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Film Details View Controller-->
-        <scene sceneID="GiZ-6Q-cLv">
+        <scene sceneID="gUI-jp-X0U">
             <objects>
-                <tableViewController storyboardIdentifier="FilmDetailsViewController" id="r5B-CF-846" customClass="FilmDetailsViewController" customModule="KinopoiskClient" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="qp6-I7-xnE">
+                <viewController storyboardIdentifier="FilmDetailsViewController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="aWF-Xu-hMU" customClass="FilmDetailsViewController" customModule="Kinopoisk" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ija-wc-JAu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="LS9-jO-Ru3">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WqY-JK-i94">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="300"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="300" id="D6z-Rr-jSX"/>
-                                    </constraints>
-                                </imageView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstAttribute="trailing" secondItem="WqY-JK-i94" secondAttribute="trailing" id="Qzh-Er-0Ab"/>
-                                <constraint firstAttribute="bottom" secondItem="WqY-JK-i94" secondAttribute="bottom" id="bnN-E2-rUL"/>
-                                <constraint firstItem="WqY-JK-i94" firstAttribute="leading" secondItem="LS9-jO-Ru3" secondAttribute="leading" id="euL-9i-6hy"/>
-                            </constraints>
-                        </view>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilmDetailsHeaderCellView" id="7bN-YE-uv0" customClass="FilmDetailsHeaderCellView" customModule="KinopoiskClient" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="350" width="393" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7bN-YE-uv0" id="s3w-QD-fa7">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilmDetailsDescriptionCellView" id="QxD-QR-ey1" customClass="FilmDetailsDescriptionCellView" customModule="KinopoiskClient" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="393.66666793823242" width="393" height="43.666667938232422"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QxD-QR-ey1" id="cif-j2-OBz">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="r5B-CF-846" id="gOV-Te-kut"/>
-                            <outlet property="delegate" destination="r5B-CF-846" id="XFr-BW-OW5"/>
-                        </connections>
-                    </tableView>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" prompted="NO"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nWG-zc-N1I" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fL-Xg-hCZ" customClass="FilmDetailsCoverView" customModule="Kinopoisk" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="437"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Omm-pv-yPh">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="437"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="437" identifier="imageHeight" id="OT4-V9-8Q0"/>
+                                    <constraint firstItem="Omm-pv-yPh" firstAttribute="top" secondItem="6fL-Xg-hCZ" secondAttribute="top" id="RGK-Q6-6wo"/>
+                                    <constraint firstItem="Omm-pv-yPh" firstAttribute="leading" secondItem="6fL-Xg-hCZ" secondAttribute="leading" id="Yx6-nm-anR"/>
+                                    <constraint firstAttribute="trailing" secondItem="Omm-pv-yPh" secondAttribute="trailing" id="eTN-Jb-YMW"/>
+                                    <constraint firstAttribute="bottom" secondItem="Omm-pv-yPh" secondAttribute="bottom" id="faD-xz-s9S"/>
+                                    <constraint firstItem="Omm-pv-yPh" firstAttribute="centerX" secondItem="6fL-Xg-hCZ" secondAttribute="centerX" id="koQ-z4-2fL"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="coverImageView" destination="Omm-pv-yPh" id="VUu-AG-7ut"/>
+                                </connections>
+                            </view>
+                            <tableView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="8KQ-YM-F67">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <view key="tableHeaderView" opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="r3z-dn-JTI">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="434"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilmDetailsHeaderCellView" id="RfA-HR-kyW" customClass="FilmDetailsHeaderCellView" customModule="Kinopoisk" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="484" width="393" height="43.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RfA-HR-kyW" id="SQv-kY-tEA">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fl-kq-Ywa">
+                                                    <rect key="frame" x="20" y="4" width="353" height="35.666666666666664"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" priority="750" constant="36" id="TUL-Bc-VDc"/>
+                                                        <constraint firstAttribute="width" priority="750" constant="353" id="X0l-TI-gRV"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="0fl-kq-Ywa" firstAttribute="leading" secondItem="RfA-HR-kyW" secondAttribute="leading" constant="20" id="2oB-yZ-Nvn"/>
+                                            <constraint firstAttribute="bottom" secondItem="0fl-kq-Ywa" secondAttribute="bottom" priority="750" constant="4" id="MdW-jU-dyh"/>
+                                            <constraint firstItem="0fl-kq-Ywa" firstAttribute="top" secondItem="RfA-HR-kyW" secondAttribute="top" priority="750" constant="4" id="blA-JP-pM8"/>
+                                            <constraint firstAttribute="trailing" secondItem="0fl-kq-Ywa" secondAttribute="trailing" constant="20" id="o8W-F5-eNu"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="0fl-kq-Ywa" id="cTy-2a-KaP"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="aWF-Xu-hMU" id="Lly-mA-7KG"/>
+                                    <outlet property="delegate" destination="aWF-Xu-hMU" id="5ja-AB-J6f"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="gvT-pU-ZRq"/>
+                        <color key="backgroundColor" systemColor="labelColor"/>
+                        <constraints>
+                            <constraint firstItem="8KQ-YM-F67" firstAttribute="leading" secondItem="gvT-pU-ZRq" secondAttribute="leading" id="4HA-ld-zAO"/>
+                            <constraint firstAttribute="bottom" secondItem="8KQ-YM-F67" secondAttribute="bottom" id="DMe-DK-PiU"/>
+                            <constraint firstItem="6fL-Xg-hCZ" firstAttribute="leading" secondItem="gvT-pU-ZRq" secondAttribute="leading" id="H7w-Fe-OnL"/>
+                            <constraint firstItem="6fL-Xg-hCZ" firstAttribute="trailing" secondItem="gvT-pU-ZRq" secondAttribute="trailing" id="Tw9-Wa-gz9"/>
+                            <constraint firstItem="8KQ-YM-F67" firstAttribute="trailing" secondItem="gvT-pU-ZRq" secondAttribute="trailing" id="kQp-Pu-2W0"/>
+                            <constraint firstItem="6fL-Xg-hCZ" firstAttribute="top" secondItem="ija-wc-JAu" secondAttribute="top" id="tSz-Ps-zC8"/>
+                            <constraint firstItem="8KQ-YM-F67" firstAttribute="top" secondItem="ija-wc-JAu" secondAttribute="top" id="yys-DU-rRf"/>
+                        </constraints>
+                    </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="coverImageView" destination="6fL-Xg-hCZ" id="1zS-CE-S5R"/>
+                        <outlet property="tableView" destination="8KQ-YM-F67" id="M5A-uy-oK0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w6t-sV-Nft" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3398" y="-16"/>
+            <point key="canvasLocation" x="4356.4885496183206" y="4.9295774647887329"/>
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -24,12 +24,23 @@ final class FilmsListViewController: UITableViewController {
         super.viewDidLoad()
         bindViewModelToView()
         bindViewEvents()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setupNavigationBarAppearance()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        refreshTableViewData()
+        if isLoadingFirstTime() {
+            refreshTableViewData()
+        }
     }
     
     //MARK: - View setup
-    func bindViewModelToView() {
+    private func bindViewModelToView() {
         listViewModel.$films
             .sink(receiveValue: { [weak self] films in
                 guard let self else { return }
@@ -62,7 +73,7 @@ final class FilmsListViewController: UITableViewController {
             .store(in: &viewModelBindings)
     }
     
-    func bindViewEvents() {
+    private func bindViewEvents() {
         searchTextSubject
             .filter { $0.count > 1 }
             .sink (receiveValue: { [weak self] searchText in
@@ -71,6 +82,12 @@ final class FilmsListViewController: UITableViewController {
             }).store(in: &viewBindings)
     }
     
+    private func setupNavigationBarAppearance() {
+        navigationController?.isNavigationBarHidden = true
+        navigationController?.navigationBar.topItem?.title = " "
+    }
+    
+    //MARK: - Intrinsic logic
     private func startLoading() {
         refreshControl?.beginRefreshing()
     }
@@ -82,8 +99,12 @@ final class FilmsListViewController: UITableViewController {
     private func refreshTableViewData() {
         let snapshot = makeSnapshot()
         dataSource.apply(snapshot, animatingDifferences: false)
-        
+
         listViewModel.reloadData()
+    }
+    
+    private func isLoadingFirstTime() -> Bool {
+        cellsViewModels.count == 0
     }
     
     private func updateSections(films: [Film]) {
@@ -106,7 +127,8 @@ extension FilmsListViewController {
 //MARK: - TableView Datasource
 private extension FilmsListViewController {
     private func makeDataSource() -> UITableViewDiffableDataSource<FilmsListViewModel.Section, Film> {
-        return UITableViewDiffableDataSource(tableView: tableView, cellProvider: { [weak self] tableView, indexPath, film in
+        return UITableViewDiffableDataSource(tableView: tableView, cellProvider: {
+            [weak self] tableView, indexPath, film in
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: FilmCellView.identifier,
                 for: indexPath) as! FilmCellView
