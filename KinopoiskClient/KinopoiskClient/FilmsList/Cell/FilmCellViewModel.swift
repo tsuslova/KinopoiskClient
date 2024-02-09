@@ -8,26 +8,65 @@
 import Foundation
 import Combine
 
-final class FilmCellViewModel {
-    @Published var title: String = ""
-    @Published var description: String = ""
-        
-    @Published var posterImageData: Data?
+class ImageViewModel {
+    @Published var imageData: Data?
     @Published var isImageLoading: Bool = false
     
-    private let film: Film
     private var imageLoadingService = CacheImageLoader()
+    private var imageLoadingBinding: AnyCancellable?
     
-    private var dataLoadingBindings = Set<AnyCancellable>()
+    private let imageURL: URL
     
-    init(film: Film) {
-        self.film = film
+    init(imageURL: URL) {
+        self.imageURL = imageURL
         
         setUpBindings()
     }
     
     func cancelLoading() {
         imageLoadingService.cancelLoading()
+        imageLoadingBinding = nil
+    }
+    
+    //MARK: Intrinsic logic
+    private func setUpBindings() {
+        imageLoadingBinding = imageLoadingService.$imageData
+            .sink { [weak self] _ in
+                self?.isImageLoading = false
+            } receiveValue: { [weak self] data in
+                if let imageData = data {
+                    self?.imageData = imageData
+                } else {
+                    self?.imageData = nil
+                    //TODO set placeholder image
+                }
+            }
+        imageLoadingService.fetch(from: imageURL)
+    }
+}
+
+final class FilmCellViewModel {
+    @Published var title: String = ""
+    @Published var description: String = ""
+    
+    private let film: Film
+    
+    private var dataLoadingBindings = Set<AnyCancellable>()
+    
+    public var posterImageViewModel: ImageViewModel?
+    
+    init(film: Film) {
+        if let url = URL(string: film.posterUrlPreview) {
+            posterImageViewModel = ImageViewModel(imageURL: url)
+        }
+        
+        self.film = film
+        
+        setUpBindings()
+    }
+    
+    func cancelLoading() {
+        posterImageViewModel?.cancelLoading()
         dataLoadingBindings.removeAll()
     }
     
@@ -39,22 +78,6 @@ final class FilmCellViewModel {
     private func setUpBindings() {
         title = film.nameRu ?? "Unnamed movie"
         fillDescription()
-        
-        imageLoadingService.$imageData
-            .sink { [weak self] _ in
-                self?.isImageLoading = false
-            } receiveValue: { [weak self] data in
-                if let imageData = data {
-                    self?.posterImageData = imageData
-                } else {
-                    self?.posterImageData = nil
-                    //TODO set placeholder image
-                }
-            }.store(in: &dataLoadingBindings)
-        
-        if let url = URL(string: film.posterUrlPreview) {
-            imageLoadingService.fetch(from: url)
-        }
     }
     
     private func fillDescription() {

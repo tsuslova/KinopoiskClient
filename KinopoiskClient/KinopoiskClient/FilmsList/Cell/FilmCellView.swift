@@ -29,7 +29,7 @@ final class FilmCellView: UITableViewCell {
         descriptionLabel.text = viewModel.description
         
         posterImageView.image = nil
-        viewModel.$posterImageData
+        viewModel.posterImageViewModel?.$imageData
             .compactMap { $0 }
             .map { UIImage(data: $0) }
             .sink { [weak posterImageView] image in

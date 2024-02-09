@@ -24,10 +24,6 @@ final class FilmsListViewController: UITableViewController {
         super.viewDidLoad()
         bindViewModelToView()
         bindViewEvents()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
         refreshTableViewData()
     }
@@ -172,5 +168,20 @@ extension FilmsListViewController: UISearchBarDelegate {
         searchBar.text = ""
         searchBar.resignFirstResponder()
         refreshTableViewData()
+    }
+}
+
+//MARK: - UITableViewDelegate
+extension FilmsListViewController {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let film = dataSource.itemIdentifier(for: indexPath) else {
+            return
+        }
+            
+        let storyboard = UIStoryboard(name: "FilmDetails", bundle: nil)
+        if let filmDetailsVC = storyboard.instantiateViewController(withIdentifier: "FilmDetailsViewController") as? FilmDetailsViewController {
+            filmDetailsVC.film = film
+            navigationController?.pushViewController(filmDetailsVC, animated: true)
+        }
     }
 }
