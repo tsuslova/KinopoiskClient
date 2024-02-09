@@ -8,65 +8,30 @@
 import Foundation
 import Combine
 
-class ImageViewModel {
-    @Published var imageData: Data?
-    @Published var isImageLoading: Bool = false
-    
-    private var imageLoadingService = CacheImageLoader()
-    private var imageLoadingBinding: AnyCancellable?
-    
-    private let imageURL: URL
-    
-    init(imageURL: URL) {
-        self.imageURL = imageURL
-        
-        setUpBindings()
-    }
-    
-    func cancelLoading() {
-        imageLoadingService.cancelLoading()
-        imageLoadingBinding = nil
-    }
-    
-    //MARK: Intrinsic logic
-    private func setUpBindings() {
-        imageLoadingBinding = imageLoadingService.$imageData
-            .sink { [weak self] _ in
-                self?.isImageLoading = false
-            } receiveValue: { [weak self] data in
-                if let imageData = data {
-                    self?.imageData = imageData
-                } else {
-                    self?.imageData = nil
-                    //TODO set placeholder image
-                }
-            }
-        imageLoadingService.fetch(from: imageURL)
-    }
-}
-
 final class FilmCellViewModel {
     @Published var title: String = ""
     @Published var description: String = ""
+    @Published var imageData: Data?
     
     private let film: Film
     
     private var dataLoadingBindings = Set<AnyCancellable>()
     
-    private(set) var posterImageViewModel: ImageViewModel?
+    private var posterImageLoader: CacheImageLoader?
     
     init(film: Film) {
-        if let url = URL(string: film.posterUrlPreview) {
-            posterImageViewModel = ImageViewModel(imageURL: url)
-        }
-        
         self.film = film
+        
+        if let url = URL(string: film.posterUrlPreview) {
+            posterImageLoader = CacheImageLoader()
+            posterImageLoader?.fetch(from: url)
+        }
         
         setUpBindings()
     }
     
     func cancelLoading() {
-        posterImageViewModel?.cancelLoading()
+        posterImageLoader?.cancelLoading()
         dataLoadingBindings.removeAll()
     }
     
@@ -77,6 +42,8 @@ final class FilmCellViewModel {
     //MARK: Intrinsic logic
     private func setUpBindings() {
         title = film.nameRu ?? "Unnamed movie"
+        posterImageLoader?.$imageData.assign(to: &$imageData)
+        
         fillDescription()
     }
     

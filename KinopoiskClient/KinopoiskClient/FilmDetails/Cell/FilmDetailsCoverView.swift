@@ -17,7 +17,7 @@ class FilmDetailsCoverView: UIView {
     
     private var initialImageHeight: CGFloat?
     
-    var viewModel: ImageViewModel? {
+    var viewModel: FilmDetailsViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
             viewModelChanged(viewModel)
@@ -25,11 +25,16 @@ class FilmDetailsCoverView: UIView {
         }
     }
     
-    func viewModelChanged(_ viewModel: ImageViewModel) {
+    func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
         coverImageView.image = nil
-        imageBinding = viewModel.$imageData
+        imageBinding = viewModel.$coverImageData
             .compactMap { $0 }
             .map { UIImage(data: $0) }
+            .compactMap { $0 }
+            .map({ image in
+                let size = image.size.width
+                return image.crop(to: CGSize(width: size, height: size))
+            })
             .sink { [weak coverImageView] image in
                 coverImageView?.image = image
             }

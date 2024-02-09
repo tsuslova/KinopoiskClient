@@ -15,6 +15,8 @@ protocol FileCacheable {
     func remove(at path: URL)
     func fileExists(atPath path: String) -> Bool
     func createDirectory(atPath path: String)
+    
+    func path(for url: URL) -> URL
 }
 
 struct FileCache: FileCacheable {
@@ -22,12 +24,19 @@ struct FileCache: FileCacheable {
         .urls(for: .cachesDirectory, in: .userDomainMask)
         .first!
     
-    func save(_ data: Data, to path: URL) {
-        try? data.write(to: path)
+    func save(_ data: Data, to url: URL) {
+        let imageURL = path(for: url)
+        try? data.write(to: imageURL)
     }
     
-    func get(from path: URL) -> Data? {
-        try? Data(contentsOf: path)
+    func path(for url: URL) -> URL {
+        let urlEncoded = url.absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) ?? ""
+        return directoryURL.appendingPathComponent(urlEncoded)
+    }
+    
+    func get(from url: URL) -> Data? {
+        let imageURL = path(for: url)
+        return try? Data(contentsOf: imageURL)
     }
     
     func remove(at path: URL) {

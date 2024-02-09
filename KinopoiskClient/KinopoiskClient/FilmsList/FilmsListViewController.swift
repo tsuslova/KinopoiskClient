@@ -202,7 +202,7 @@ extension FilmsListViewController {
             
         let storyboard = UIStoryboard(name: "FilmDetails", bundle: nil)
         if let filmDetailsVC = storyboard.instantiateViewController(withIdentifier: "FilmDetailsViewController") as? FilmDetailsViewController {
-            filmDetailsVC.film = film
+            filmDetailsVC.initializeViewModel(with: film)
             navigationController?.pushViewController(filmDetailsVC, animated: true)
         }
     }

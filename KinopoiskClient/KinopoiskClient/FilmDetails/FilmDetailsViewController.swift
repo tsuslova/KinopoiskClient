@@ -9,12 +9,8 @@ import UIKit
 import Combine
 
 final class FilmDetailsViewController: UIViewController {
-    var film: Film! {
-        didSet {
-            viewModel = makeViewModel()
-        }
-    }
-    var viewModel: FilmDetailsViewModel!
+    private var viewModel: FilmDetailsViewModel?
+    
     @IBOutlet private var coverImageView: FilmDetailsCoverView!
     @IBOutlet private var tableView: UITableView!
     
@@ -25,6 +21,8 @@ final class FilmDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBarAppearance()
         setUpBindings()
+        
+        viewModel?.loadFilmDetails()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,17 +43,8 @@ final class FilmDetailsViewController: UIViewController {
     }
     
     private func setUpBindings() {
+        coverImageView.viewModel = viewModel
         setUpTableViewScrollingBindings()
-        
-        viewModel.$film.sink { [weak coverImageView] film in
-            guard let coverUrlString = film.coverUrl,
-                let coverUrl = URL(string: coverUrlString) else {
-                //TODO adjust UI to hide the image??
-                //Or load posterURL and adjust it to rectangular aspect ratio
-                return
-            }
-            coverImageView?.viewModel = ImageViewModel(imageURL: coverUrl)
-        }.store(in: &viewModelBindings)
     }
     
     var scrollBinding: Cancellable?
@@ -70,9 +59,9 @@ final class FilmDetailsViewController: UIViewController {
 }
 
 //MARK: - Private setup
-private extension FilmDetailsViewController {
-    func makeViewModel() -> FilmDetailsViewModel {
-        FilmDetailsViewModel(film: film, filmsService: RemoteFilmsService())
+extension FilmDetailsViewController {
+    func initializeViewModel(with film: Film) {
+        viewModel = FilmDetailsViewModel(film: film, filmsService: RemoteFilmsService())
     }
 }
 
