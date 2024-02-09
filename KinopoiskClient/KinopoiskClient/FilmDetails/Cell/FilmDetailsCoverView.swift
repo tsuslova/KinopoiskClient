@@ -11,7 +11,7 @@ import Combine
 class FilmDetailsCoverView: UIView {
     @IBOutlet weak var coverImageView: UIImageView!
 //    @IBOutlet weak var posterImageSuperview: UIView!
-//    @IBOutlet weak var blackOverlayView: UIView!
+    @IBOutlet weak var blackOverlayView: UIView!
     
     private var imageBinding: AnyCancellable?
     
