@@ -29,6 +29,7 @@ final class FilmDetailsViewController: UIViewController {
         super.viewWillAppear(animated)
         makeNavigationBarBackgroundClear()
         insetTableViewToFillNavigationBarArea()
+        setupHeaderSize()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,11 +51,14 @@ final class FilmDetailsViewController: UIViewController {
     var scrollBinding: Cancellable?
     private func setUpTableViewScrollingBindings() {
         scrollBinding = tableView.publisher(for: \.contentOffset)
-//            .filter { $0.y < 0 }
             .sink(receiveValue: { offset in
                 self.coverImageView.update(yOffset: offset.y)
             })
-
+    }
+    
+    func setupHeaderSize() {
+        let headerSize = tableView.frame.size.width
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: headerSize, height: headerSize)
     }
 }
 
@@ -65,6 +69,7 @@ extension FilmDetailsViewController {
     }
 }
 
+//MARK: - Fill navigation bar area with table content
 private extension FilmDetailsViewController {
     
     func makeNavigationBarBackgroundClear() {

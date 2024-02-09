@@ -49,11 +49,10 @@ class FilmDetailsCoverView: UIView {
             initialImageHeight = imageHeight.constant
         }
         
-        //WTF why the tableView's initial ContentOffset is 6.33?? and than starts
-        //reducing on scrolling down (beyound 0 as expected)
-        print("yOffset \(yOffset)")
-        if yOffset < 6.33 {
+        if yOffset < 0 {
             imageHeight.constant = initialImageHeight! - yOffset
+        } else {
+            blackOverlayView.alpha = yOffset / initialImageHeight!
         }
     }
     

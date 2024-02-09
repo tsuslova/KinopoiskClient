@@ -25,7 +25,7 @@
                             </connections>
                         </searchBar>
                         <activityIndicatorView key="tableFooterView" hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" id="Tec-MM-G54">
-                            <rect key="frame" x="0.0" y="840" width="393" height="44"/>
+                            <rect key="frame" x="0.0" y="715" width="393" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </activityIndicatorView>
                         <prototypes>
@@ -110,6 +110,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="iWn-v0-Cpz">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" systemColor="systemBackgroundColor"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
