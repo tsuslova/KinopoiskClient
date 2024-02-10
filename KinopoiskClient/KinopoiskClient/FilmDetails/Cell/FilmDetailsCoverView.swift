@@ -17,7 +17,7 @@ class FilmDetailsCoverView: UIView {
     
     private var initialImageHeight: CGFloat?
     
-    var viewModel: FilmDetailsViewModel? {
+    weak var viewModel: FilmDetailsViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
             viewModelChanged(viewModel)
@@ -25,7 +25,7 @@ class FilmDetailsCoverView: UIView {
         }
     }
     
-    func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
+    private func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
         coverImageView.image = nil
         imageBinding = viewModel.$coverImageData
             .compactMap { $0 }

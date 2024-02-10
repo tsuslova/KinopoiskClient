@@ -1,6 +1,6 @@
 //
 //  FilmDetailsViewModel.swift
-//  KinopoiskClientClient
+//  KinopoiskClient
 //
 //  Created by Toto on 02.02.2024.
 //
@@ -35,9 +35,12 @@ final class FilmDetailsViewModel {
     
     //MARK: Intrinsic logic
     private func setUpBindings() {
-        coverImageLoader.$imageData.assign(to: &$coverImageData)
+        coverImageLoader.$imageData
+            .receive(on: RunLoop.main)
+            .assign(to: &$coverImageData)
         
         logoImageLoader.$imageData
+            .dropFirst()
             .receive(on: RunLoop.main)
             .sink { [weak self] data in
                 guard let data = data else {
@@ -56,7 +59,7 @@ final class FilmDetailsViewModel {
             //just to use initial film data
             .replaceError(with: film)
             .sink { [weak self] film in
-                guard let self = self else { return }
+                guard let self else { return }
                 self.film = film
                 
                 self.loadImages()

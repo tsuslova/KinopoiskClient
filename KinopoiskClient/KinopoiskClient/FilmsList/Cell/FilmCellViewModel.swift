@@ -42,7 +42,9 @@ final class FilmCellViewModel {
     //MARK: Intrinsic logic
     private func setUpBindings() {
         title = film.nameRu ?? "Unnamed movie"
-        posterImageLoader?.$imageData.assign(to: &$imageData)
+        posterImageLoader?.$imageData
+            .receive(on: RunLoop.main)
+            .assign(to: &$imageData)
         
         fillDescription()
     }

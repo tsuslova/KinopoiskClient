@@ -1,6 +1,6 @@
 //
 //  FilmDetailsViewController.swift
-//  KinopoiskClientClient
+//  KinopoiskClient
 //
 //  Created by Toto on 02.02.2024.
 //
@@ -54,7 +54,8 @@ final class FilmDetailsViewController: UIViewController {
                 viewModel.$logoImageData.eraseToAnyPublisher(),
                 viewModel.$logoReplacingText.eraseToAnyPublisher())
             .sink { _ in
-                self.tableView.setNeedsLayout()
+                self.headerCell?.setNeedsLayout()
+                self.headerCell?.layoutIfNeeded()
             }.store(in: &viewModelBindings)
         }
     }
@@ -105,7 +106,7 @@ extension FilmDetailsViewController {
     }
 }
 
-//UITableViewController
+//MARK: - UITableViewDataSource
 extension FilmDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         2

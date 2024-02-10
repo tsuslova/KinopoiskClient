@@ -15,8 +15,8 @@ final class CacheImageLoader: ObservableObject {
     //cross-platform app e.g. with MacOS's NSImage)
     //Of course that might look abstrusely here and in small iOS-only app I would
     //rather prefer UIImage here instead of Data
-    @Published var imageData: Data?
-    @Published var isImageLoading: Bool = false
+    @Published private(set) var imageData: Data? = nil
+    @Published private(set) var isImageLoading: Bool = false
     
     private(set) var state: State
     
@@ -31,11 +31,11 @@ final class CacheImageLoader: ObservableObject {
          cache: FileCacheable = FileCache()) {
         self.loader = remoteLoader
         self.cache = cache
-        self.state = .none
+        self.state = .success
     }
     
     func fetch(from url: URL?) {
-        guard state == .none, let url = url else { return }
+        guard state != .loading, let url = url else { return }
         
         if !loadFromCache(url: url){
             requestFromLoader(url: url)
@@ -60,31 +60,28 @@ final class CacheImageLoader: ObservableObject {
         cancellable = loader.get(from: url)
             .subscribe(on: imageFetchingQueue)
             .replaceError(with: nil)
-            .receive(on: DispatchQueue.main)
-            .handleEvents(
-                receiveSubscription: { [weak self] _ in
-                    self?.state = .loading
-                    self?.isImageLoading = false
-                },
-                receiveOutput: { [weak self] imageData in
-                    guard let imageData = imageData else { return }
-                    try? self?.saveImageDataToCache(imageData, to: url)
-                })
             .sink(
                 receiveCompletion: { [weak self] completion in
                     if case .failure = completion {
                         self?.state = .failed
                     }
-                }, receiveValue: { [weak self] image in
-                    self?.imageData = image
-                    self?.state = .success
+                    self?.isImageLoading = false
+                }, receiveValue: { [weak self] imageData in
+                    guard let self else { return }
+                    self.imageData = imageData
+                    self.state = .success
+                    
+                    if let imageData = imageData{
+                        try? self.saveImageDataToCache(imageData, to: url)
+                    }
                 })
     }
-
+    
     func cancelLoading() {
+        state = .success
         cancellable = nil
     }
-
+    
     //MARK: - Intrinsic logic
     private func saveImageDataToCache(_ data: Data, to url: URL) throws {
         if !cache.fileExists(atPath: cache.directoryURL.path) {
@@ -97,7 +94,7 @@ final class CacheImageLoader: ObservableObject {
 //MARK: - Loading state
 extension CacheImageLoader {
     enum State {
-        case failed, none
+        case failed
         case loading
         case success
     }

@@ -1,6 +1,6 @@
 //
-//  FilmDetailsCellView.swift
-//  KinopoiskClientClient
+//  FilmDetailsHeaderCellView.swift
+//  KinopoiskClient
 //
 //  Created by Toto on 02.02.2024.
 //
@@ -35,6 +35,7 @@ class FilmDetailsHeaderCellView: UITableViewCell {
     }
     
     func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
+        self.titleLabel.text = ""
         viewModel.$logoReplacingText
             .sink { text in
                 self.titleLabel.text = text

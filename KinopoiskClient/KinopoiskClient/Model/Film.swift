@@ -71,7 +71,7 @@ extension Film {
         year = filmDetailsResponse.year
     
         logoUrl = filmDetailsResponse.logoUrl
-
+        
         nameOriginal = filmDetailsResponse.nameOriginal
         ratingVoteCount = filmDetailsResponse.ratingVoteCount
         filmLength = filmDetailsResponse.filmLength
