@@ -89,7 +89,9 @@ final class FilmsListViewController: UITableViewController {
     
     //MARK: - Intrinsic logic
     private func startLoading() {
-        refreshControl?.beginRefreshing()
+        if tableView.contentOffset.y < tableView.frame.height {
+            refreshControl?.beginRefreshing()
+        }
     }
     
     private func finishLoading() {

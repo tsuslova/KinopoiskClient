@@ -17,11 +17,14 @@ class FilmDetailsCoverView: UIView {
     
     private var initialImageHeight: CGFloat?
     
+    private let blackOverlayBaseAlpha = 0.06
+    
     weak var viewModel: FilmDetailsViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
             viewModelChanged(viewModel)
             initializeImageHeightConstraint()
+            blackOverlayView.alpha = blackOverlayBaseAlpha
         }
     }
     
@@ -51,8 +54,9 @@ class FilmDetailsCoverView: UIView {
         
         if yOffset < 0 {
             imageHeight.constant = initialImageHeight! - yOffset
+            blackOverlayView.alpha = blackOverlayBaseAlpha
         } else {
-            blackOverlayView.alpha = yOffset / initialImageHeight!
+            blackOverlayView.alpha = blackOverlayBaseAlpha + yOffset / initialImageHeight!
         }
     }
     

@@ -43,6 +43,11 @@ final class FilmDetailsViewController: UIViewController {
     private func setupNavigationBarAppearance() {
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.topItem?.title = " "
+        
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.setBackIndicatorImage(UIImage(named: "backIcon"), transitionMaskImage: UIImage(named: "backIcon"))
+        navigationController?.navigationBar.standardAppearance = appearance
     }
     
     private func setUpBindings() {
