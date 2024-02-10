@@ -49,5 +49,7 @@ class FilmDetailsHeaderCellView: UITableViewCell {
                 logoImageView?.image = image
             }
             .store(in: &bindings)
+        ratingLabel.text = viewModel.rating()
+        ratingLabel.textColor = viewModel.ratingTextColor()
     }
 }

@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import UIKit.UIColor
 
 final class FilmDetailsViewModel {
     @Published private(set) var film: Film
@@ -22,7 +23,7 @@ final class FilmDetailsViewModel {
     private var coverImageLoader = CacheImageLoader()
     private var logoImageLoader = CacheImageLoader()
     
-    //MARK: Initialization
+    //MARK: Interface
     init(film: Film, filmsService: FilmsService) {
         self.film = film
         self.filmsService = filmsService
@@ -33,6 +34,28 @@ final class FilmDetailsViewModel {
         loadFilmDetailsData()
     }
     
+    func rating() -> String {
+        if let rating = film.ratingKinopoisk {
+            return String(format: "%.1f", rating)
+        } else {
+            return ""
+        }
+    }
+    
+    func ratingTextColor() -> UIColor {
+        guard let rating = film.ratingKinopoisk else {
+            return .darkGray //Default
+        }
+        //Imitation of current Kinopoisk behaviour(normally should be configured on server-side):
+        if rating >= 7 {
+            return .green
+        } else if rating <= 4 {
+            return .red
+        } else {
+            return .darkGray
+        }
+    }
+
     //MARK: Intrinsic logic
     private func setUpBindings() {
         coverImageLoader.$imageData
