@@ -11,7 +11,7 @@ struct FilmDetailsResponse: Decodable, Hashable {
     let kinopoiskId: Int
     let nameRu: String?
     let posterUrl: String
-    let coverUrl: String
+    let coverUrl: String?
     let posterUrlPreview: String
     let ratingKinopoisk: Float?
     

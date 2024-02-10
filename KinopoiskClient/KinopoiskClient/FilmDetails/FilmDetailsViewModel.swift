@@ -87,6 +87,6 @@ final class FilmDetailsViewModel {
     }
     
     private func fillLogoReplacingInfo() {
-        logoReplacingText = film.nameRu
+        logoReplacingText = (film.nameRu ?? film.nameOriginal ?? "Unnamed movie")?.uppercased()
     }
 }

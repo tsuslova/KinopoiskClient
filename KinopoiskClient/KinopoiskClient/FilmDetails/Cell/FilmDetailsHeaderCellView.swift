@@ -37,11 +37,7 @@ class FilmDetailsHeaderCellView: UITableViewCell {
     func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
         viewModel.$logoReplacingText
             .sink { text in
-                if let text = text {
-                    //TODO add the titleLabel.text = text
-                } else {
-                    //TODO hide the label
-                }
+                self.titleLabel.text = text
             }.store(in: &bindings)
         
         logoImageView.image = nil
