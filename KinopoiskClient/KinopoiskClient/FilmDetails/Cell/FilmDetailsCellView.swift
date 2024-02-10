@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 //MARK: - Film header view
 class FilmDetailsHeaderCellView: UITableViewCell {
@@ -18,9 +19,38 @@ class FilmDetailsHeaderCellView: UITableViewCell {
     
     @IBOutlet private var yearGenreLabel: UILabel!
     @IBOutlet private var countryLengthLabel: UILabel!
-}
-
-//MARK: - Film description view
-class FilmDetailsDescriptionCellView: UITableViewCell {
-    @IBOutlet private var descriptionLabel: UILabel!
+    
+    private var bindings = Set<AnyCancellable>()
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        backgroundColor = .clear
+    }
+    
+    var viewModel: FilmDetailsViewModel? {
+        didSet {
+            guard let viewModel = viewModel else { return }
+            viewModelChanged(viewModel)
+        }
+    }
+    
+    func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
+        viewModel.$logoReplacingText
+            .sink { text in
+                if let text = text {
+                    //TODO add the titleLabel.text = text
+                } else {
+                    //TODO hide the label
+                }
+            }.store(in: &bindings)
+        
+        logoImageView.image = nil
+        viewModel.$logoImageData
+            .compactMap { $0 }
+            .map { UIImage(data: $0) }
+            .sink { [weak logoImageView] image in
+                logoImageView?.image = image
+            }
+            .store(in: &bindings)
+    }
 }

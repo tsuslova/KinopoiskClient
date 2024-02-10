@@ -16,6 +16,8 @@ final class FilmDetailsViewController: UIViewController {
     
     private var viewModelBindings = Set<AnyCancellable>()
     
+    private var headerCell: FilmDetailsHeaderCellView?
+    
     //MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +30,7 @@ final class FilmDetailsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         makeNavigationBarBackgroundClear()
-        insetTableViewToFillNavigationBarArea()
+        setupTableView()
         setupHeaderSize()
     }
     
@@ -46,6 +48,15 @@ final class FilmDetailsViewController: UIViewController {
     private func setUpBindings() {
         coverImageView.viewModel = viewModel
         setUpTableViewScrollingBindings()
+        
+        if let viewModel = viewModel {
+            Publishers.CombineLatest(
+                viewModel.$logoImageData.eraseToAnyPublisher(),
+                viewModel.$logoReplacingText.eraseToAnyPublisher())
+            .sink { _ in
+                self.tableView.setNeedsLayout()
+            }.store(in: &viewModelBindings)
+        }
     }
     
     var scrollBinding: Cancellable?
@@ -56,9 +67,14 @@ final class FilmDetailsViewController: UIViewController {
             })
     }
     
-    func setupHeaderSize() {
+    private func setupHeaderSize() {
         let headerSize = tableView.frame.size.width
         tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: headerSize, height: headerSize)
+    }
+    
+    private func setupTableView() {
+        tableView.rowHeight = UITableView.automaticDimension
+        insetTableViewToFillNavigationBarArea()
     }
 }
 
@@ -70,20 +86,20 @@ extension FilmDetailsViewController {
 }
 
 //MARK: - Fill navigation bar area with table content
-private extension FilmDetailsViewController {
+extension FilmDetailsViewController {
     
-    func makeNavigationBarBackgroundClear() {
+    private func makeNavigationBarBackgroundClear() {
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
     }
     
-    func restoreNavigationBarToDefault() {
+    private func restoreNavigationBarToDefault() {
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationController?.navigationBar.shadowImage = nil
     }
     
-    func insetTableViewToFillNavigationBarArea() {
+    private func insetTableViewToFillNavigationBarArea() {
         let yOffset = UIApplication.shared.statusBarHeight + self.navigationController!.navigationBar.frame.size.height
         tableView.contentInset = UIEdgeInsets(top: -yOffset, left: 0, bottom: 0, right: 0)
     }
@@ -92,12 +108,29 @@ private extension FilmDetailsViewController {
 //UITableViewController
 extension FilmDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        15
+        2
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmDetailsHeaderCellView", for: indexPath) as! FilmDetailsHeaderCellView
-        cell.backgroundColor = .black
+        switch  indexPath.row {
+        case 0:
+            return filmDetailsHeaderCell(tableView)
+        default:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FilmDetailsDescriptionCellView", for: indexPath) as! FilmDetailsDescriptionCellView
+            return cell
+        }
+    }
+    
+    private func filmDetailsHeaderCell(_ tableView: UITableView) -> FilmDetailsHeaderCellView {
+        if let headerCell = headerCell {
+            return headerCell
+        }
+        
+        guard let viewModel = viewModel else { fatalError() }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmDetailsHeaderCellView") as! FilmDetailsHeaderCellView
+        cell.viewModel = viewModel
+        headerCell = cell
         return cell
     }
 }

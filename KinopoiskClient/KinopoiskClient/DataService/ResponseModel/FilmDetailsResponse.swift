@@ -18,7 +18,9 @@ struct FilmDetailsResponse: Decodable, Hashable {
     let countries: [CountryResponse]
     let genres: [GenreResponse]
     let year: Int
-    
+
+    let logoUrl: String?
+
     let nameOriginal: String?
     let ratingVoteCount: Int?
     let filmLength: Int?

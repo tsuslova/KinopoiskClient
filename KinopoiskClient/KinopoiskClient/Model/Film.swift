@@ -15,6 +15,8 @@ struct Film: Hashable {
     let coverUrl: String?
     let ratingKinopoisk: Float?
     
+    let logoUrl: String?
+    
     let countries: [String]
     let genres: [String]
     let year: Int
@@ -43,6 +45,8 @@ extension Film {
         year = filmResponse.year
         
         //Only available in Details Response
+        logoUrl = nil
+        
         nameOriginal = nil
         ratingVoteCount = nil
         filmLength = nil
@@ -65,7 +69,9 @@ extension Film {
         countries = filmDetailsResponse.countries.map{ $0.country }
         genres = filmDetailsResponse.genres.map{ $0.genre }
         year = filmDetailsResponse.year
-        
+    
+        logoUrl = filmDetailsResponse.logoUrl
+
         nameOriginal = filmDetailsResponse.nameOriginal
         ratingVoteCount = filmDetailsResponse.ratingVoteCount
         filmLength = filmDetailsResponse.filmLength

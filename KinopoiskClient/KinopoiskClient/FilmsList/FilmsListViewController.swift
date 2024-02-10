@@ -165,7 +165,6 @@ private extension FilmsListViewController {
 //MARK: - UITableViewDataSourcePrefetching
 extension FilmsListViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        print("prefetchRowsAt indexPaths \(indexPaths)")
         listViewModel.loadNextPageIfNeeded(for: indexPaths.map(\.row).max() ?? 0)
     }
     

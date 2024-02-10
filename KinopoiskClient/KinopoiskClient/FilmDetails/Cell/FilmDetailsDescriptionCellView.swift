@@ -6,3 +6,10 @@
 //
 
 import UIKit
+
+//MARK: - Film description view
+class FilmDetailsDescriptionCellView: UITableViewCell {
+    @IBOutlet private var shortDescriptionLabel: UILabel!
+    @IBOutlet private var descriptionLabel: UILabel!
+    
+}
