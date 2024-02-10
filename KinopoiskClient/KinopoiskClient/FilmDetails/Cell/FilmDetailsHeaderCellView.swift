@@ -49,7 +49,14 @@ class FilmDetailsHeaderCellView: UITableViewCell {
                 logoImageView?.image = image
             }
             .store(in: &bindings)
-        ratingLabel.text = viewModel.rating()
-        ratingLabel.textColor = viewModel.ratingTextColor()
+        
+        viewModel.$film
+            .sink { [weak self] film in
+                guard let self else { return }
+                self.ratingLabel.text = viewModel.rating(for: film)
+                self.ratingLabel.textColor = viewModel.ratingTextColor(for: film)
+                self.ratingCountLabel.text = viewModel.ratingVoteCount(for: film)
+            }
+            .store(in: &bindings)
     }
 }

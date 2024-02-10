@@ -34,16 +34,17 @@ final class FilmDetailsViewModel {
         loadFilmDetailsData()
     }
     
-    func rating() -> String {
-        if let rating = film.ratingKinopoisk {
+    //MARK: Data preparation to display in interface
+    func rating(for film: Film?) -> String {
+        if let rating = film?.ratingKinopoisk {
             return String(format: "%.1f", rating)
         } else {
             return ""
         }
     }
     
-    func ratingTextColor() -> UIColor {
-        guard let rating = film.ratingKinopoisk else {
+    func ratingTextColor(for film: Film?) -> UIColor {
+        guard let rating = film?.ratingKinopoisk else {
             return .darkGray //Default
         }
         //Imitation of current Kinopoisk behaviour(normally should be configured on server-side):
@@ -56,6 +57,21 @@ final class FilmDetailsViewModel {
         }
     }
 
+    func ratingVoteCount(for film: Film?) -> String {
+        guard let ratingVoteCount = film?.ratingVoteCount else {
+            return ""
+        }
+        let ratingVoteCountShorten: String
+        if ratingVoteCount > 1000000 {
+            ratingVoteCountShorten = "\(ratingVoteCount / 1000000)M"
+        } else if ratingVoteCount > 1000 {
+            ratingVoteCountShorten = "\(ratingVoteCount / 1000)K"
+        } else {
+            ratingVoteCountShorten = "\(ratingVoteCount)"
+        }
+        return ratingVoteCountShorten
+    }
+    
     //MARK: Intrinsic logic
     private func setUpBindings() {
         coverImageLoader.$imageData
