@@ -17,6 +17,9 @@ final class FilmDetailsViewModel {
     //If logo image is not available display the replacing text info:
     @Published private(set) var logoReplacingText: String?
     
+    @Published private(set) var shortDescription: String?
+    @Published private(set) var description: String?
+    
     private var filmsService: FilmsService
     private var bindings = Set<AnyCancellable>()
     
@@ -72,6 +75,11 @@ final class FilmDetailsViewModel {
         return ratingVoteCountShorten
     }
     
+    func showDescriptionCell(for film: Film) -> Bool {
+        return (film.shortDescription?.count ?? 0) > 0 ||
+            (film.description?.count ?? 0) > 0
+    }
+    
     //MARK: Intrinsic logic
     private func setUpBindings() {
         coverImageLoader.$imageData
@@ -101,17 +109,24 @@ final class FilmDetailsViewModel {
                 guard let self else { return }
                 self.film = film
                 
+                self.shortDescription = film.shortDescription
+                self.description = film.description
+                
                 self.loadImages()
             }.store(in: &bindings)
     }
     
     private func loadImages() {
+        loadCoverImage()
+        
+        loadLogo()
+    }
+    
+    private func loadCoverImage() {
         guard let imageUrl = self.coverURL(for: film) else {
             return
         }
         self.coverImageLoader.fetch(from: imageUrl)
-        
-        loadLogo()
     }
     
     private func coverURL(for film: Film) -> URL? {

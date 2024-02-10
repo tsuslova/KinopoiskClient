@@ -54,16 +54,23 @@ final class FilmDetailsViewController: UIViewController {
         coverImageView.viewModel = viewModel
         setUpTableViewScrollingBindings()
         
-        if let viewModel = viewModel {
-            Publishers.CombineLatest(
-                viewModel.$logoImageData.eraseToAnyPublisher(),
-                viewModel.$logoReplacingText.eraseToAnyPublisher())
+        guard let viewModel = viewModel else { return }
+        
+        Publishers.CombineLatest(
+            viewModel.$logoImageData.eraseToAnyPublisher(),
+            viewModel.$logoReplacingText.eraseToAnyPublisher())
+        .sink { _ in
+            self.headerCell?.setNeedsLayout()
+            self.headerCell?.layoutIfNeeded()
+        }.store(in: &viewModelBindings)
+        
+        Publishers.Merge(viewModel.$shortDescription, viewModel.$description)
             .sink { _ in
-                self.headerCell?.setNeedsLayout()
-                self.headerCell?.layoutIfNeeded()
+                self.tableView.reloadData()
             }.store(in: &viewModelBindings)
-        }
+        
     }
+    
     
     var scrollBinding: Cancellable?
     private func setUpTableViewScrollingBindings() {
@@ -123,6 +130,7 @@ extension FilmDetailsViewController: UITableViewDataSource {
             return filmDetailsHeaderCell(tableView)
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "FilmDetailsDescriptionCellView", for: indexPath) as! FilmDetailsDescriptionCellView
+            cell.viewModel = viewModel
             return cell
         }
     }
