@@ -53,14 +53,24 @@ final class FilmCellViewModel {
         let countries = film.countries.shortenTo3Words
         let genres = film.genres.shortenTo3Words
         
-        if !countries.isEmpty && !genres.isEmpty {
-            description = "\(countries), \(genres), \(film.year)"
-        } else if !countries.isEmpty && genres.isEmpty{
-            description = "\(countries), \(film.year)"
-        } else if countries.isEmpty && !genres.isEmpty{
-            description = "\(genres), \(film.year)"
+        let yearString: String
+        let yearSuffix: String
+        if let year = film.year {
+            yearSuffix = ", \(year)"
+            yearString = "\(year)"
         } else {
-            description = "\(film.year)"
+            yearSuffix = ""
+            yearString = ""
+        }
+        
+        if !countries.isEmpty && !genres.isEmpty {
+            description = "\(countries), \(genres)\(yearSuffix)"
+        } else if !countries.isEmpty && genres.isEmpty{
+            description = "\(countries)\(yearSuffix)"
+        } else if countries.isEmpty && !genres.isEmpty{
+            description = "\(genres)\(yearSuffix)"
+        } else {
+            description = yearString
         }
     }
 }

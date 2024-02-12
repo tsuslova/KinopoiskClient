@@ -27,9 +27,9 @@ struct FilmResponse: Decodable, Hashable {
     let posterUrlPreview: String
     let ratingKinopoisk: Float?
     
-    let countries: [CountryResponse]
-    let genres: [GenreResponse]
-    let year: Int
+    let countries: [CountryResponse]?
+    let genres: [GenreResponse]?
+    let year: Int?
     
     static func map(_ data: Data, response: URLResponse) throws -> [FilmResponse] {
         let resp: FilmsResponse = try mapGeneric(data, response: response)

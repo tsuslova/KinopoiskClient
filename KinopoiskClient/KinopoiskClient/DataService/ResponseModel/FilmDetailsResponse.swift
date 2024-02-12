@@ -15,9 +15,9 @@ struct FilmDetailsResponse: Decodable, Hashable {
     let posterUrlPreview: String
     let ratingKinopoisk: Float?
     
-    let countries: [CountryResponse]
-    let genres: [GenreResponse]
-    let year: Int
+    let countries: [CountryResponse]?
+    let genres: [GenreResponse]?
+    let year: Int?
 
     let logoUrl: String?
 

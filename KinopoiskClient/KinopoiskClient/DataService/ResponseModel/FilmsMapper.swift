@@ -19,16 +19,3 @@ func mapGeneric<Response: Decodable>(_ data: Data, response: URLResponse) throws
     return root
 }
 
-//final class FilmsResponseMapper {
-//    private struct FilmsResponse: Decodable {
-//        let total: Int
-//        let totalPages: Int
-//        let items: [FilmResponse]
-//    }
-//    
-//    static func map(_ data: Data, response: URLResponse) throws -> [FilmResponse] {
-//        let resp: FilmsResponse = try map(data, response: response)
-//        return resp.items
-//    }
-//}
-
