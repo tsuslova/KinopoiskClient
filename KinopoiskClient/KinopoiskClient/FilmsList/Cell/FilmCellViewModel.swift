@@ -43,7 +43,7 @@ final class FilmCellViewModel {
     private func setUpBindings() {
         title = film.nameRu ?? "Unnamed movie"
         posterImageLoader?.$imageData
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .assign(to: &$imageData)
         
         fillDescription()
