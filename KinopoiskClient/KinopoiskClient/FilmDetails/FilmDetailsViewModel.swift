@@ -107,15 +107,23 @@ final class FilmDetailsViewModel {
         return [countries, lengthString, limits].joined
     }
     
+    func footerColor() -> UIColor {
+        if !(film.shortDescription?.isEmpty ?? true) ||
+            !(film.description?.isEmpty ?? true) {
+            return .white
+        }
+        return .clear
+    }
+    
     //MARK: Intrinsic logic
     private func setUpBindings() {
         coverImageLoader.$imageData
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .assign(to: &$coverImageData)
         
         logoImageLoader.$imageData
             .dropFirst()
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] data in
                 guard let data = data else {
                     self?.fillLogoReplacingInfo()
@@ -128,7 +136,7 @@ final class FilmDetailsViewModel {
     
     private func loadFilmDetailsData() {
         filmsService.getDetails(filmId: film.kinopoiskId)
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             //If we don't succeed to receive FilmDetails it's ok
             //just to use initial film data
             .replaceError(with: film)

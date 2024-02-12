@@ -65,12 +65,12 @@ final class FilmDetailsViewController: UIViewController {
         }.store(in: &viewModelBindings)
         
         Publishers.Merge(viewModel.$shortDescription, viewModel.$description)
-            .sink { _ in
+            .sink { publisher in
                 self.tableView.reloadData()
+                self.tableView.tableFooterView?.backgroundColor = viewModel.footerColor()
             }.store(in: &viewModelBindings)
         
     }
-    
     
     var scrollBinding: Cancellable?
     private func setUpTableViewScrollingBindings() {
@@ -87,6 +87,7 @@ final class FilmDetailsViewController: UIViewController {
     
     private func setupTableView() {
         tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.tableFooterView?.backgroundColor = .clear
         insetTableViewToFillNavigationBarArea()
     }
 }
@@ -114,7 +115,7 @@ extension FilmDetailsViewController {
     
     private func insetTableViewToFillNavigationBarArea() {
         let yOffset = UIApplication.shared.statusBarHeight + self.navigationController!.navigationBar.frame.size.height
-        tableView.contentInset = UIEdgeInsets(top: -yOffset, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: -yOffset, left: 0, bottom: -yOffset, right: 0)
     }
 }
 
