@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 //MARK: - Film description view
-class FilmDetailsDescriptionCellView: UITableViewCell {
+class FilmDetailsDescriptionCellView: FilmDetailsCellView {
     @IBOutlet private var shortDescriptionLabel: UILabel!
     @IBOutlet private var descriptionLabel: UILabel!
     
@@ -20,14 +20,7 @@ class FilmDetailsDescriptionCellView: UITableViewCell {
         backgroundColor = .clear
     }
     
-    var viewModel: FilmDetailsViewModel? {
-        didSet {
-            guard let viewModel = viewModel else { return }
-            viewModelChanged(viewModel)
-        }
-    }
-    
-    func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
+    override func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
         self.shortDescriptionLabel.text = ""
         self.descriptionLabel.text = ""
         

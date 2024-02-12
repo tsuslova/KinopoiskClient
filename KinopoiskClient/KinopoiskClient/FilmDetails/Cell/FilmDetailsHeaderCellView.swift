@@ -9,7 +9,7 @@ import UIKit
 import Combine
 
 //MARK: - Film header view
-class FilmDetailsHeaderCellView: UITableViewCell {
+class FilmDetailsHeaderCellView: FilmDetailsCellView {
     @IBOutlet private var logoImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
     
@@ -27,14 +27,7 @@ class FilmDetailsHeaderCellView: UITableViewCell {
         backgroundColor = .clear
     }
     
-    var viewModel: FilmDetailsViewModel? {
-        didSet {
-            guard let viewModel = viewModel else { return }
-            viewModelChanged(viewModel)
-        }
-    }
-    
-    func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
+    override func viewModelChanged(_ viewModel: FilmDetailsViewModel) {
         self.titleLabel.text = ""
         viewModel.$logoReplacingText
             .sink { text in

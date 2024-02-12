@@ -16,7 +16,7 @@ final class FilmDetailsViewController: UIViewController {
     
     private var viewModelBindings = Set<AnyCancellable>()
     
-    private var headerCell: FilmDetailsHeaderCellView?
+    private var headerCell: FilmDetailsCellView?
     
     //MARK: - View lifecycle
     override func viewDidLoad() {
@@ -121,31 +121,54 @@ extension FilmDetailsViewController {
 
 //MARK: - UITableViewDataSource
 extension FilmDetailsViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        2
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch  indexPath.row {
-        case 0:
-            return filmDetailsHeaderCell(tableView)
-        default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FilmDetailsDescriptionCellView", for: indexPath) as! FilmDetailsDescriptionCellView
-            cell.viewModel = viewModel
-            return cell
+    enum FilmDetailsCellType: Int, CaseIterable {
+        case header = 0
+        case description = 1
+        
+        var identifier: String{
+            switch self {
+            case .header:
+                return "FilmDetailsHeaderCellView"
+            case .description:
+                return "FilmDetailsDescriptionCellView"
+            }
         }
     }
     
-    private func filmDetailsHeaderCell(_ tableView: UITableView) -> FilmDetailsHeaderCellView {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        FilmDetailsCellType.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cellType = FilmDetailsCellType(rawValue: indexPath.row) else {
+            fatalError("It looks like I try add rows without declaring them in enum")
+        }
+        
+        switch cellType {
+        case .header:
+            return filmDetailsHeaderCell(tableView)
+        case .description:
+            return detailsCell(tableView, cellType: cellType)
+        }
+    }
+    
+    private func filmDetailsHeaderCell(_ tableView: UITableView) -> FilmDetailsCellView {
         if let headerCell = headerCell {
             return headerCell
         }
         
-        guard let viewModel = viewModel else { fatalError() }
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FilmDetailsHeaderCellView") as! FilmDetailsHeaderCellView
-        cell.viewModel = viewModel
+        let cell = detailsCell(tableView, cellType: .header)
         headerCell = cell
+        return cell
+    }
+    
+    private func detailsCell(_ tableView: UITableView, cellType: FilmDetailsCellType) -> FilmDetailsCellView {
+        guard let viewModel = viewModel else {
+            fatalError("FilmDetailsViewController's viewModel not set")
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellType.identifier) as! FilmDetailsCellView
+        cell.viewModel = viewModel
         return cell
     }
 }
