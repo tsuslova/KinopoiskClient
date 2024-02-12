@@ -57,6 +57,7 @@ final class FilmsListViewController: UITableViewController {
             case .error(let error):
                 //TODO: show error
                 print("Error: \(error)")
+                self?.showError()
                 self?.finishLoading()
             }
         }
@@ -88,6 +89,10 @@ final class FilmsListViewController: UITableViewController {
         if tableView.contentOffset.y < tableView.frame.height {
             refreshControl?.beginRefreshing()
         }
+    }
+    
+    private func showError() {
+        showAlertMessage(title: "Ошибка загрузки данных", message: "Вероятно, Вы не добавили APIKey или же лимит загрузок на сегодня исчерпан.")
     }
     
     private func finishLoading() {
