@@ -61,7 +61,7 @@ final class FilmDetailsViewModel {
     }
 
     func ratingVoteCount(for film: Film?) -> String {
-        guard let ratingVoteCount = film?.ratingVoteCount else {
+        guard let ratingVoteCount = film?.ratingVoteCount, ratingVoteCount > 0 else {
             return ""
         }
         let ratingVoteCountShorten: String
@@ -78,6 +78,18 @@ final class FilmDetailsViewModel {
     func showDescriptionCell(for film: Film) -> Bool {
         return (film.shortDescription?.count ?? 0) > 0 ||
             (film.description?.count ?? 0) > 0
+    }
+    
+    func yearGenres(for film: Film) -> String {
+        let genres = "\(film.genres.joined(separator: ", "))"
+        
+        let yearString: String
+        if let year = film.year {
+            yearString = "\(year)"
+        } else {
+            yearString = ""
+        }
+        return "\([yearString, genres].joined(separator: ", "))"
     }
     
     //MARK: Intrinsic logic
