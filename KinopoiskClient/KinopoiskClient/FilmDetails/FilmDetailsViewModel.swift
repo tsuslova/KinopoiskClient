@@ -103,8 +103,8 @@ final class FilmDetailsViewModel {
         } else {
             lengthString = ""
         }
-        let limits = film.ratingAgeLimits
-        return [countries, lengthString].joined
+        let limits = film.ratingAgeLimits?.humanReadable ?? ""
+        return [countries, lengthString, limits].joined
     }
     
     //MARK: Intrinsic logic
