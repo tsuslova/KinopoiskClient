@@ -89,7 +89,22 @@ final class FilmDetailsViewModel {
         } else {
             yearString = ""
         }
-        return "\([yearString, genres].joined(separator: ", "))"
+        return [yearString, genres].joined
+    }
+    
+    func countryLength(for film: Film) -> String {
+        let countries = "\(film.countries.joined(separator: ", "))"
+        
+        var lengthString: String
+        if let length = film.filmLength {
+            lengthString = length > 60 ?
+                "\(length/60)ч \(length % 60) мин" :
+                "\(length) мин"
+        } else {
+            lengthString = ""
+        }
+        let limits = film.ratingAgeLimits
+        return [countries, lengthString].joined
     }
     
     //MARK: Intrinsic logic
@@ -157,5 +172,13 @@ final class FilmDetailsViewModel {
     
     private func fillLogoReplacingInfo() {
         logoReplacingText = (film.nameRu ?? film.nameOriginal ?? "Unnamed movie")?.uppercased()
+    }
+}
+
+//MARK: - Helpers
+private extension Array where Element == String {
+    
+    var joined: String {
+        return "\(self.filter { !$0.isEmpty }.joined(separator: ", "))"
     }
 }

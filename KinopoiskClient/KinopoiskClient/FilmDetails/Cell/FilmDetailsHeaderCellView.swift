@@ -58,6 +58,7 @@ class FilmDetailsHeaderCellView: UITableViewCell {
                 self.ratingCountLabel.text = viewModel.ratingVoteCount(for: film)
                 self.nameOriginalLabel.text = film.nameOriginal
                 self.yearGenreLabel.text = viewModel.yearGenres(for: film)
+                self.countryLengthLabel.text = viewModel.countryLength(for: film)
             }
             .store(in: &bindings)
     }
