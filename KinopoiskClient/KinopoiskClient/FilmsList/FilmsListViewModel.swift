@@ -78,10 +78,6 @@ final class FilmsListViewModel {
     }
     
     func search(text: String?) {
-        guard text != searchedText else {
-            print("Already searched for \(searchedText ?? "")")
-            return
-        }
         guard text != nil || searchedText == nil else {
             print("Nothing to be done")
             return
