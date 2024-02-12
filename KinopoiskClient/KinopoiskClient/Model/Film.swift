@@ -74,7 +74,7 @@ extension Film {
         
         logoUrl = filmDetailsResponse.logoUrl
         nameOriginal = filmDetailsResponse.nameOriginal
-        ratingVoteCount = filmDetailsResponse.ratingKinopoiskVoteCount
+        ratingVoteCount = filmDetailsResponse.ratingVoteCount
         filmLength = filmDetailsResponse.filmLength
         if let limit = filmDetailsResponse.ratingAgeLimits {
             ratingAgeLimits = AgeLimits(rawValue: limit)

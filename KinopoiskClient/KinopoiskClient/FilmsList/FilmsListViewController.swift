@@ -44,7 +44,6 @@ final class FilmsListViewController: UITableViewController {
         listViewModel.$films
             .sink(receiveValue: { [weak self] films in
                 guard let self else { return }
-                print("listViewModel.$films receive \(films.count) films for page \(self.listViewModel.lastRequestedPage)")
                 self.updateSections(films: films)
             })
             .store(in: &viewModelBindings)
@@ -52,14 +51,12 @@ final class FilmsListViewController: UITableViewController {
         let stateValueHandler: (ListViewModelState) -> Void = { [weak self] state in
             switch state {
             case .loading:
-                print(".loading")
                 self?.startLoading()
             case .loadingFinished:
-                print(".loadingFinished")
                 self?.finishLoading()
             case .error(let error):
-                print("error \(error)")
                 //TODO: show error
+                print("Error: \(error)")
                 self?.finishLoading()
             }
         }
@@ -77,7 +74,6 @@ final class FilmsListViewController: UITableViewController {
         searchTextSubject
             .filter { $0.count > 1 }
             .sink (receiveValue: { [weak self] searchText in
-                print("lastValue = \(searchText)")
                 self?.listViewModel.search(text: searchText)
             }).store(in: &viewBindings)
     }
@@ -121,7 +117,6 @@ final class FilmsListViewController: UITableViewController {
 //MARK: - IBActions
 extension FilmsListViewController {
     @IBAction func refreshList(_ sender: Any) {
-        print("refreshList")
         refreshTableViewData()
     }
 }
@@ -179,7 +174,6 @@ extension FilmsListViewController: UITableViewDataSourcePrefetching {
 //MARK: - UISearchBarDelegate
 extension FilmsListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print("textDidChange")
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

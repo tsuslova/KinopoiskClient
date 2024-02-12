@@ -65,7 +65,7 @@ final class FilmsListViewModel {
         //For simplification assume for the moment that we load pages one by one
         //(interface doesn't provide an ability for accessing pages in non-sequential way)
         guard !state.isLoading else { return }
-        print("loadNextPageIfNeeded(\(lastRow)), lastRequestedPage = \(lastRequestedPage)")
+        //print("loadNextPageIfNeeded(\(lastRow)), lastRequestedPage = \(lastRequestedPage)")
         if lastRow >= films.count - 1 {
             loadNextPage()
         }

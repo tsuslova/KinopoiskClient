@@ -17,7 +17,6 @@ class FilmDetailsDescriptionCellView: UITableViewCell {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        print("Set color .clear")
         backgroundColor = .clear
     }
     
