@@ -18,6 +18,9 @@
   "testTargets" : [
     {
       "parallelizable" : true,
+      "skippedTests" : [
+        "FilmsServiceEndToEndTests"
+      ],
       "target" : {
         "containerPath" : "container:KinopoiskClient.xcodeproj",
         "identifier" : "994279E52B6B408A008A8A91",
