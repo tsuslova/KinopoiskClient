@@ -92,9 +92,10 @@ enum AgeLimits: String {
     
     var humanReadable: String {
         switch self {
-        case .age16: "16+"
-        case .age18: "18+"
+        case .age16: 
+            return "16+"
+        case .age18:
+            return "18+"
         }
-        
     }
 }
