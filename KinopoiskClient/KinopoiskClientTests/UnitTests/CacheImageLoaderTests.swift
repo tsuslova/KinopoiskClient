@@ -70,7 +70,6 @@ final class CacheImageLoaderTests: XCTestCase {
         XCTAssertEqual(sut.imageData, data, "Expected to load data saved before to cache")
     }
     
-
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: CacheImageLoader, loader: ImageLoaderSpy, cache: MockFileCache) {
         let loader = ImageLoaderSpy()
         let cache = MockFileCache()
