@@ -16,6 +16,15 @@ final class RemoteImageLoaderTests: XCTestCase {
         XCTAssertEqual(client.requestedURLs.count, 0, "Expected to have no requested URL before first request")
     }
     
+    func test_get_requestsDataFromURL() {
+        let url = URL(string: "https://a-given-url.com")!
+        let (sut, client) = makeSUT()
+        
+        _ = sut.get(from: url)
+        
+        XCTAssertEqual(client.requestedURLs, [url])
+    }
+    
     // MARK: - Helpers
         
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: ImageLoader, client: HTTPClientSpy) {
