@@ -4,7 +4,4 @@
    <FileRef
       location = "group:KinopoiskClient.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "container:KinopoiskClient/KinopoiskClient.xcodeproj">
-   </FileRef>
 </Workspace>
