@@ -44,7 +44,7 @@ final class RemoteFilmsService: FilmsService {
         
     func filmsDataPublisher(url: URL, parameters: CompactDictionaryRepresentable) -> AnyPublisher<[Film], ServiceError> {
         //print("url \(url), parameters = \(parameters)")
-        guard let publisher = client.dataTaskPublisher(for: url, parameters: parameters.compactDictionaryRepresentation) else {
+        guard let publisher = client.responsePublisher(for: url, parameters: parameters.compactDictionaryRepresentation) else {
             return Fail(error: ServiceError.badRequest)
                 .eraseToAnyPublisher()
         }
@@ -58,7 +58,7 @@ final class RemoteFilmsService: FilmsService {
     func getDetails(filmId: Int) -> AnyPublisher<Film, ServiceError> {
         let url = FilmsAPIEndpoint.details(filmId: filmId).url
         
-        guard let publisher = client.dataTaskPublisher(for: url) else {
+        guard let publisher = client.responsePublisher(for: url) else {
             return Fail(error: ServiceError.badRequest)
                 .eraseToAnyPublisher()
         }

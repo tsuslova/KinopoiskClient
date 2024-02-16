@@ -38,10 +38,9 @@ final class RemoteImageLoaderTests: XCTestCase {
     func test_getURL_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        let url = URL(string: "https://a-given-url.com")!
-        let error = URLError(.unknown)
+        let url = anyURL()
         
-        client.completeLoading(url: url, with: error)
+        client.completeLoading(url: url, with: URLError(.unknown))
     
         let expectation = expectation(description: "Wait for loading completion")
         let _ = sut.get(from: url)
@@ -63,7 +62,6 @@ final class RemoteImageLoaderTests: XCTestCase {
         
         let url = anyURL()
         let data = anyData()
-        let response = anyHTTPURLResponse()
         
         let expectation = expectation(description: "Wait for completion")
         
@@ -86,9 +84,5 @@ final class RemoteImageLoaderTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(client, file: file, line: line)
         return (sut, client)
-    }
-
-    private func anyHTTPURLResponse() -> HTTPURLResponse {
-        return HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
 }

@@ -21,21 +21,16 @@ public class URLSessionHTTPClient: HTTPClient {
         setupSessionConfiguration()
     }
     
-    public func dataTaskPublisher(for url: URL) -> URLSession.DataTaskPublisher? {
-        return dataTaskPublisher(for: url, parameters: [:])
+    public func responsePublisher(for url: URL) -> AnyPublisher<APIResponse, URLError>? {
+        return responsePublisher(for: url, parameters: [:])
     }
     
-    public func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher? {
+    public func responsePublisher(for url: URL, parameters: [String: Any]) -> AnyPublisher<APIResponse, URLError>? {
         guard let request = getUrlRequest(with: url, parameters: parameters) else {
             return nil
         }
-        return session.dataTaskPublisher(for: request)
+        return session.dataTaskPublisher(for: request).eraseToAnyPublisher()
     }
-    
-    public func responsePublisher(for url: URL) -> AnyPublisher<APIResponse, URLError>? {
-        return dataTaskPublisher(for: url)?.eraseToAnyPublisher()
-    }
-    
     
     // MARK: - Setup
     private func setupSessionConfiguration() {

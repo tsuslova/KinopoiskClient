@@ -20,6 +20,11 @@ class HTTPClientSpy: HTTPClient {
     var responses: [URL:(URLResponse, Data)] = [:]
     
     func responsePublisher(for url: URL) -> AnyPublisher<APIResponse, URLError>? {
+        return responsePublisher(for: url, parameters: [:])
+            
+    }
+    
+    func responsePublisher(for url: URL, parameters: [String: Any]) -> AnyPublisher<APIResponse, URLError>? {
         requestedURLs.append(url)
 
         if let error = errors[url] {
@@ -36,14 +41,6 @@ class HTTPClientSpy: HTTPClient {
         
         //print("Possible error: no expected response/error set for url: \(url)")
         return nil
-    }
-    
-    func dataTaskPublisher(for url: URL) -> URLSession.DataTaskPublisher? {
-        return nil
-    }
-    
-    func dataTaskPublisher(for url: URL, parameters: [String: Any]) -> URLSession.DataTaskPublisher? {
-        return dataTaskPublisher(for: url)
     }
     
     //Spying
