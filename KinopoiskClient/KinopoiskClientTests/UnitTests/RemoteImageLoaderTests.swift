@@ -58,6 +58,27 @@ final class RemoteImageLoaderTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
+    func test_getURL_succeedsOnHTTPURLResponseWithData() {
+        let (sut, client) = makeSUT()
+        
+        let url = anyURL()
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+        
+        let expectation = expectation(description: "Wait for completion")
+        
+        client.completeLoading(url: url, withStatusCode: 200, data: data)
+        
+        let _ = sut.get(from: url)
+            .sink { _ in } receiveValue: { receivedData in
+                XCTAssertEqual(receivedData, data, "Waiting for data returned from HTTPClient")
+                
+                expectation.fulfill()
+            }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
     // MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: ImageLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
@@ -65,5 +86,9 @@ final class RemoteImageLoaderTests: XCTestCase {
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(client, file: file, line: line)
         return (sut, client)
+    }
+
+    private func anyHTTPURLResponse() -> HTTPURLResponse {
+        return HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
 }

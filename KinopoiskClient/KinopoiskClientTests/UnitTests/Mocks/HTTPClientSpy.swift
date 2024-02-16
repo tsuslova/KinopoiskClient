@@ -17,22 +17,25 @@ protocol URLSessionProtocol {
 class HTTPClientSpy: HTTPClient {
     var requestedURLs: [URL] = []
     var errors: [URL:URLError] = [:]
-    var responses: [URL:URLResponse] = [:]
+    var responses: [URL:(URLResponse, Data)] = [:]
     
     func responsePublisher(for url: URL) -> AnyPublisher<APIResponse, URLError>? {
+        requestedURLs.append(url)
+
         if let error = errors[url] {
-            return Fail(error: error)
+            errors[url] = nil
+            return Fail(error: error).eraseToAnyPublisher()
+        }
+        
+        if let (response, data) = responses[url] {
+            responses[url] = nil
+            return Just((data: data, response: response))
+                .setFailureType(to: URLError.self)
                 .eraseToAnyPublisher()
         }
         
-        //TODO check the save completion results instead
-        let data = anyData()
-        let response = okResponse(for: url)
-        requestedURLs.append(url)
-        
-        return Just((data: data, response: response))
-                    .setFailureType(to: URLError.self)
-                    .eraseToAnyPublisher()
+        //print("Possible error: no expected response/error set for url: \(url)")
+        return nil
     }
     
     func dataTaskPublisher(for url: URL) -> URLSession.DataTaskPublisher? {
@@ -43,15 +46,16 @@ class HTTPClientSpy: HTTPClient {
         return dataTaskPublisher(for: url)
     }
     
+    //Spying
     func completeLoading(url: URL, with error: URLError){
         errors[url] = error
     }
     
-    func completeLoading(url: URL, withStatusCode code: Int, data: Data, index: Int = 0){
-//        let response = HTTPURLResponse(url: requestedURLs[index],
-//                                       statusCode: code,
-//                                       httpVersion: nil,
-//                                       headerFields: nil)!
-//        messages[index].completion(HTTPClient.Result.success((data, response)))
+    func completeLoading(url: URL, withStatusCode code: Int, data: Data){
+        let response = HTTPURLResponse(url: url,
+                                       statusCode: code,
+                                       httpVersion: nil,
+                                       headerFields: nil)!
+        responses[url] = (response, data)
     }
 }
