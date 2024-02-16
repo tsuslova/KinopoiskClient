@@ -45,7 +45,7 @@ final class FilmCellViewModel {
         posterImageLoader?.$imageData
             .receive(on: DispatchQueue.main)
             .assign(to: &$imageData)
-        
+
         fillDescription()
     }
     

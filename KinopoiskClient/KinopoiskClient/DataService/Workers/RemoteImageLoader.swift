@@ -20,7 +20,7 @@ final class RemoteImageLoader: ImageLoader {
     }
     
     func get(from url: URL) -> AnyPublisher<Data?, URLError> {
-        guard let publisher = client.dataTaskPublisher(for: url, parameters: [:]) else {
+        guard let publisher = client.responsePublisher(for: url) else {
             return Fail(error: URLError(.badURL))
                 .eraseToAnyPublisher()
         }

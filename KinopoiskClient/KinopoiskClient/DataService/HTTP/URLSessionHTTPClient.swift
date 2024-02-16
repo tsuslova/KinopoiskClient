@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 public class URLSessionHTTPClient: HTTPClient {
     
@@ -30,6 +31,11 @@ public class URLSessionHTTPClient: HTTPClient {
         }
         return session.dataTaskPublisher(for: request)
     }
+    
+    public func responsePublisher(for url: URL) -> AnyPublisher<APIResponse, URLError>? {
+        return dataTaskPublisher(for: url)?.eraseToAnyPublisher()
+    }
+    
     
     // MARK: - Setup
     private func setupSessionConfiguration() {
