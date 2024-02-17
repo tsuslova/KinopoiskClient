@@ -65,7 +65,7 @@ final class RemoteImageLoaderTests: XCTestCase {
         
         let expectation = expectation(description: "Wait for completion")
         
-        client.completeLoading(requestIndex: 0, url: url, withStatusCode: 200, data: data)
+        client.completeLoading(requestIndex: 0, withStatusCode: 200, data: data)
         
         let _ = sut.get(from: url)
             .sink { _ in } receiveValue: { receivedData in

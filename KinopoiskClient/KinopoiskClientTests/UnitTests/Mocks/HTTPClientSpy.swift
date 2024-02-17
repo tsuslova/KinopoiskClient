@@ -17,7 +17,7 @@ protocol URLSessionProtocol {
 class HTTPClientSpy: HTTPClient {
     var requestedURLs: [URL] = []
     var errors: [Int: URLError] = [:]
-    var responses: [Int: (URLResponse, Data)] = [:]
+    var responses: [Int: (Int, Data)] = [:]
     
     func responsePublisher(for url: URL) -> AnyPublisher<APIResponse, URLError>? {
         return responsePublisher(for: url, parameters: [:])
@@ -36,7 +36,11 @@ class HTTPClientSpy: HTTPClient {
             return Fail(error: error).eraseToAnyPublisher()
         }
         
-        if let (response, data) = responses[requestIndex] {
+        if let (statusCode, data) = responses[requestIndex],
+            let response = HTTPURLResponse(url: url,
+                                           statusCode: statusCode,
+                                           httpVersion: nil,
+                                           headerFields: nil) {
             return Just((data: data, response: response))
                 .setFailureType(to: URLError.self)
                 .eraseToAnyPublisher()
@@ -50,11 +54,7 @@ class HTTPClientSpy: HTTPClient {
         errors[requestIndex] = error
     }
     
-    func completeLoading(requestIndex: Int, url: URL, withStatusCode code: Int, data: Data){
-        let response = HTTPURLResponse(url: url,
-                                       statusCode: code,
-                                       httpVersion: nil,
-                                       headerFields: nil)!
-        responses[requestIndex] = (response, data)
+    func completeLoading(requestIndex: Int, withStatusCode code: Int, data: Data){
+        responses[requestIndex] = (code, data)
     }
 }

@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct CountryResponse: Decodable, Equatable, Hashable {
+struct CountryResponse: Codable, Equatable, Hashable {
     let country: String
 }
-struct GenreResponse: Decodable, Equatable, Hashable {
+struct GenreResponse: Codable, Equatable, Hashable {
     let genre: String
 }
 
-private struct FilmsResponse: Decodable {
+struct FilmsResponse: Codable {
     let total: Int
     let totalPages: Int
     let items: [FilmResponse]
 }
 
-struct FilmResponse: Decodable, Hashable {
+struct FilmResponse: Codable, Hashable {
     let kinopoiskId: Int
     let nameRu: String?
     let posterUrl: String

@@ -40,7 +40,31 @@ final class RemoteFilmsServiceTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    // MARK: - Helpers
+    func test_getFilms_succeedsOnHTTPURLResponseWithData() {
+        let (sut, client) = makeSUT()
+        
+        let expectation = expectation(description: "Wait for load completion")
+        let page = 1
+        guard let data = mockFilmsResponse() else {
+            XCTFail("Wrong test data")
+            return
+        }
+        
+        client.completeLoading(requestIndex: 0, withStatusCode: 200, data: data)
+        
+        let _ = sut.get(page: page, keyword: nil)
+            .sink { completion in
+                if case .failure = completion {
+                    XCTFail("Waiting for success. Got an error")
+                } else {
+                    expectation.fulfill()
+                }
+            } receiveValue: { _ in }
+        
+        wait(for: [expectation], timeout: 1.0)
+    }
+    
+    //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FilmsService, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFilmsService(client: client)
@@ -49,4 +73,13 @@ final class RemoteFilmsServiceTests: XCTestCase {
         trackForMemoryLeaks(client, file: file, line: line)
         return (sut, client)
    }
+    
+    private func mockFilmsResponse() -> Data? {
+        let encoder = JSONEncoder()
+        let mockFilmResponse = FilmResponse(kinopoiskId: 1, nameRu: "", posterUrl: "", posterUrlPreview: "", ratingKinopoisk: 0, countries: nil, genres: nil, year: nil)
+        
+        let mockFilmsResponse = FilmsResponse(total: 1, totalPages: 1, items: [mockFilmResponse])
+        let encoded = try? encoder.encode(mockFilmsResponse)
+        return encoded
+    }
 }
